@@ -12,8 +12,8 @@ export default function App() {
       <div className="flex flex-col justify-center items-center h-screen w-full bg-light-1 dark:bg-dark-1">
         <div className="flex space-x-2">
       
-          <Button text="Change theme" icon={SaveIcon} onClick={()=> window.theme.switch() } />
-          <Button text="Change theme" primary onClick={()=> window.theme.switch() } />
+          <Button text="Change theme" icon={SaveIcon} onClick={()=> {} } />
+          <Button text="Change theme" primary onClick={()=> {} } />
 
         </div>
       </div>

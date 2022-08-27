@@ -1,12 +1,14 @@
 const { contextBridge, ipcRenderer } = require('electron')
 
-contextBridge.exposeInMainWorld('theme', {
-  switch: () => ipcRenderer.invoke('theme:switch'),
-});
+contextBridge.exposeInMainWorld('ipc', {
+  // IPC events
+  toggleTheme: () => ipcRenderer.invoke('ipc:toggle-theme'),
+  maximize:    () => ipcRenderer.invoke('ipc:maximize'),
+  minimize:    () => ipcRenderer.invoke('ipc:minimize'),
+  restore:     () => ipcRenderer.invoke('ipc:restore'),
+  close:       () => ipcRenderer.invoke('ipc:close'),
 
-contextBridge.exposeInMainWorld('win', {
-  maximize: () => ipcRenderer.invoke('win:maximize'),
-  minimize: () => ipcRenderer.invoke('win:minimize'),
-  restore: () => ipcRenderer.invoke('win:restore'),
-  close: () => ipcRenderer.invoke('win:close'),
+  // IPC from main to renderer
+  handleMaximizeChanged: (callback) => ipcRenderer.on('maximize-changed', callback),
+  handleToggleTheme: (callback) => ipcRenderer.on('toggle-theme', callback),
 });

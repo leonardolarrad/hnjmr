@@ -20,6 +20,46 @@ function createWindow() {
   // Set light theme by default
   nativeTheme.themeSource = 'light'
 
+  // Open the DevTools.
+  if (isDev) {
+    win.webContents.openDevTools({ mode: 'detach' });
+  };
+
+  ipcMain.handle('ipc:toggle-theme', () => {
+    if (nativeTheme.shouldUseDarkColors) {
+      nativeTheme.themeSource = 'light';
+      win.webContents.send('toggle-theme', 'light');
+    } else {
+      nativeTheme.themeSource = 'dark';
+      win.webContents.send('toggle-theme', 'dark');
+    }
+    return nativeTheme.shouldUseDarkColors;
+  });
+
+  ipcMain.handle('ipc:minimize', () => {
+    win.minimize()
+  });
+
+  ipcMain.handle('ipc:maximize', () => {
+    win.maximize()
+  });
+
+  ipcMain.handle('ipc:restore', () => {
+    win.restore()
+  });
+
+  ipcMain.handle('ipc:close', () => {
+    win.close()
+  });
+
+  win.addListener('maximize', () => {
+    win.webContents.send('maximize-changed', true)
+  });
+
+  win.addListener('unmaximize', () => {
+    win.webContents.send('maximize-changed', false)
+  });
+  
   win.loadURL(
     isDev
       ? 'http://localhost:3000'
@@ -27,37 +67,8 @@ function createWindow() {
   );
   win.maximize();
   win.show();
-
-  // Open the DevTools.
-  if (isDev) {
-    win.webContents.openDevTools({ mode: 'detach' });
-  };
-
-  ipcMain.handle('theme:switch', () => {
-    if (nativeTheme.shouldUseDarkColors) {
-      nativeTheme.themeSource = 'light'
-    } else {
-      nativeTheme.themeSource = 'dark'
-    }
-    return nativeTheme.shouldUseDarkColors
-  });
-
-  ipcMain.handle('win:minimize', () => {
-    win.minimize()
-  });
-
-  ipcMain.handle('win:maximize', () => {
-    win.maximize()
-  });
-
-  ipcMain.handle('win:restore', () => {
-    win.restore()
-  });
-
-  ipcMain.handle('win:close', () => {
-    win.close()
-  });
 }
+    
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
