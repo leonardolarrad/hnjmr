@@ -22,13 +22,13 @@ e instalamos todas las dependencias necesarias
 
 ## Ejecutar (entorno de desarrollo)
 
-Como estamos trabajando para una aplicación de escritorio pero con herramientas de desarrollo web tendremos la opción de levantar un servicio 'desktop' o un servicio 'browser', en cualquiera de los dos casos se actualizaran los cambios realizados en el código sin necesidad de recompilar. 
+Como estamos trabajando para una aplicación de escritorio pero con herramientas de desarrollo web tendremos la opción de levantar un servicio `desktop` o un servicio `browser`, en cualquiera de los dos casos se actualizaran los cambios realizados en el código sin necesidad de recompilar. 
 
 Para ejecutar la aplicación en modo escritorio corremos 
 
     $ npm run desktop 
 
-y para ejecutarla en modo browser 
+y para ejecutar la aplicación en modo browser 
 
     $ npm run browser
 
