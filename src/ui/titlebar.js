@@ -17,7 +17,7 @@ export default function Titlebar() {
   window.ipc.handleMaximizeChanged((event, value) => setIsMaximized(value));
 
   return (
-    <div className=" flex flex-row h-[36px] w-full justify-between bg-light-1 dark:bg-dark-1 ">
+    <div className="flex flex-none flex-row h-[36px] min-h-fit w-full justify-between bg-light-1 dark:bg-dark-1 ">
       <span className="title-bar-drag flex w-full" />
       <div className="flex flex-row justify-end items-center h-full">
         
@@ -41,7 +41,7 @@ export default function Titlebar() {
           </button>
         } 
         
-        <span className="title-bar-drag flex w-8"/>
+        <span className="title-bar-drag flex w-8 h-full"/>
         
         {/* Minimize */}
         <button  
