@@ -14,7 +14,7 @@ import { ReactComponent as SettingsIcon } from './../assets/icons/settings.svg';
 function renderSidebarButton(icon, text, onClick, current, label) {
   
   const className = " rounded-full w-full py-2 px-4 " +
-                    " text-gray-700 dark:text-gray-300 " +
+                    " text-gray-800 dark:text-gray-200 " +
                     " hover:bg-light-3  dark:hover:bg-dark-3 " +
                     (current ? " bg-light-3  dark:bg-dark-3 " : "");
 
@@ -22,7 +22,7 @@ function renderSidebarButton(icon, text, onClick, current, label) {
   return (
     <button className={className} onClick={onClick}>
       <div className="flex flex-row w-max flex-nowrap items-center space-x-2">
-        {icon && <div className="text-gray-700 dark:text-gray-300">
+        {icon && <div className="text-gray-800 dark:text-gray-200">
           {React.createElement(icon)}
         </div>}
         {text && <span>{text}</span>}

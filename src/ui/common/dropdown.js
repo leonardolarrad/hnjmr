@@ -8,7 +8,7 @@ export default function Dropdown({items, onSelect}) {
     setValue(e.target.value);
     onSelect(e.target.value);
   }
-  
+    
   return (
     <select className="p-2 rounded-lg h-fit border-none outline-none 
                        focus:outline-none text-gray-800 

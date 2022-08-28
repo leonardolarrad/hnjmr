@@ -28,7 +28,7 @@ export default function Titlebar() {
                         hover:bg-light-2 dark:hover:bg-dark-2"
             onClick={() => window.ipc.toggleTheme()}
           >
-            <SunIcon className="w-5 h-5 text-gray-700 dark:text-gray-300 " />
+            <SunIcon className="w-5 h-5 text-gray-800 dark:text-gray-200 " />
           </button>        
         }
         {theme === 'dark' &&
@@ -37,7 +37,7 @@ export default function Titlebar() {
                         hover:bg-light-2 dark:hover:bg-dark-2"
             onClick={() => window.ipc.toggleTheme()}
           >
-            <MoonIcon className="w-5 h-5 text-gray-700 dark:text-gray-300 " />
+            <MoonIcon className="w-5 h-5 text-gray-800 dark:text-gray-200 " />
           </button>
         } 
         
@@ -49,7 +49,7 @@ export default function Titlebar() {
                       hover:bg-light-2 dark:hover:bg-dark-2"
           onClick={() => window.ipc.minimize()}
         >
-          <MinimizeIcon className="w-5 h-5 text-gray-700 dark:text-gray-300 " />
+          <MinimizeIcon className="w-5 h-5 text-gray-800 dark:text-gray-200 " />
         </button>
 
         {/* Restore */}
@@ -59,7 +59,7 @@ export default function Titlebar() {
                         hover:bg-light-2 dark:hover:bg-dark-2"
             onClick={() => window.ipc.restore()}
           >
-            <RestoreIcon className="w-5 h-5 rotate-180 text-gray-700 dark:text-gray-300"/>
+            <RestoreIcon className="w-5 h-5 rotate-180 text-gray-800 dark:text-gray-200"/>
           </button>
         }
 
@@ -70,7 +70,7 @@ export default function Titlebar() {
                       hover:bg-light-2 dark:hover:bg-dark-2"
           onClick={() => window.ipc.maximize()}
         >
-          <MaximizeIcon className="w-5 h-5 rotate-180 text-gray-700 dark:text-gray-300"/>
+          <MaximizeIcon className="w-5 h-5 rotate-180 text-gray-800 dark:text-gray-200"/>
         </button>
         }
         
@@ -78,7 +78,7 @@ export default function Titlebar() {
         {/* Close */}
         <button  
           className="flex items-center justify-center w-12 h-full
-                      hover:bg-red-700  hover:text-gray-300 text-gray-700 dark:text-gray-300"
+                      hover:bg-red-700  hover:text-gray-200 text-gray-800 dark:text-gray-200"
           onClick={() => window.ipc.close()}
         >
           <CloseIcon className="w-5 h-5"/>
