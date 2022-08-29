@@ -1,11 +1,9 @@
-import wave from './../../assets/waves/lwave.svg';
 
 export default function WaveHeader(props) {
   return (        
     <div 
-    className="flex flex-col w-auto h-24 rounded-xl
-                bg-light-4 dark:bg-dark-4 bg-no-repeat bg-bottom bg-cover"
-    style={{ backgroundImage: `url(${wave})`}}             
+    className="wave-l flex flex-col w-auto h-24 rounded-xl mb-2
+               bg-no-repeat bg-bottom bg-cover bg-cream-3"          
     >
       <div className="flex flex-row justify-between items-center h-fit w-full space-x-1">
         <div className="flex flex-col justify-start h-full p-2 px-4"> 

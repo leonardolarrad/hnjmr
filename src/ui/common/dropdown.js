@@ -18,7 +18,7 @@ export default function Dropdown({items, onSelect}) {
     >
       {items.map(item => (
         <option 
-          className=" "
+          key={item.name}
           value={item.value}
         >
           {item.name}

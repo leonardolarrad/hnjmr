@@ -14,14 +14,15 @@
     "web-vitals": "^2.1.4"
   },
   "main": "src/main-process/main.js",
+  "proxy": "http://localhost:3000/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "desktop": "concurrently -k \"cross-env BROWSER=none npm start\" \"npm:electron\"",
+    "desktop": "concurrently -k \"cross-env PORT=3001 BROWSER=none npm start\" \"npm:electron\"",
     "browser": "react-scripts start",
-    "electron": "wait-on tcp:3000 && electron ."
+    "electron": "wait-on tcp:3001 && electron ."
   },
   "eslintConfig": {
     "extends": [

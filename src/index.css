@@ -6,4 +6,17 @@
     .title-bar-drag {
         -webkit-app-region: drag;        
     }
+
+    .wave-l {
+        background-image: url("./assets/waves/lwave.svg");
+    }
+
+    .wave-l-2 {
+        background-image: url("./assets/waves/lwave2.svg");
+    }
+
+    .wave-l-3 {
+        background-image: url("./assets/waves/lwave3.svg");
+    }
 }
+

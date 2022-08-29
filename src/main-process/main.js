@@ -64,7 +64,7 @@ function createWindow() {
   
   win.loadURL(
     isDev
-      ? 'http://localhost:3000'
+      ? 'http://localhost:3001'
       : `file://${path.join(__dirname, '../build/index.html')}`
   );
   win.maximize();
