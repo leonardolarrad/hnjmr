@@ -18,5 +18,9 @@
     .wave-l-3 {
         background-image: url("./assets/waves/lwave3.svg");
     }
+
+    .wave-cover-dark {
+        background-image: url("./assets/waves/cover-dark.svg");
+    }
 }
 

@@ -12,7 +12,7 @@ import { ReactComponent as AddIcon }   from './../../assets/icons/add.svg';
 import { ReactComponent as PrintIcon } from './../../assets/icons/print.svg';
 
 // Hooks
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useSearchParams, createSearchParams } from 'react-router-dom';
 import Pagination from "../common/pagination";
 
 export default function SuppliesTable() {
@@ -21,32 +21,48 @@ export default function SuppliesTable() {
   const navigate = useNavigate();
 
   const [data, setData] = React.useState([]);
+  const [search, setSearch] = useSearchParams({});
 
+  /* Handle http request/response */
   React.useEffect(() => {
     fetch('api/lot')
       .then(res => res.json())
-      .then(data => setData(data.map(lot => [
-        lot.medicalSupply.name_material, 
-        lot.medicalSupply.description,
-        lot.stock,
-        lot.date_delivery,
-        lot.due_date,
-        ''
-      ])))
+      .then(data => setData(data.map(lot => { return {
+          'key': lot.id_lots,
+          'values': [
+              lot.medicalSupply.name_material, 
+              lot.medicalSupply.description,
+              lot.stock,
+              lot.date_delivery,
+              lot.due_date,
+            ],
+          'actions': {
+            'view':   () => navigate(`${lot.id_lots}`),
+            'edit':   () => navigate(`:${lot.id_lots}/edit`),
+            'delete': () => navigate(`delete${lot.id_lots}`),
+          }          
+      }})))
       .catch(err => console.log(err));
-  }, [location]);
+  }, [navigate, search]);
 
   /* Handle table params */ 
   const handleDropdown = (value) => { 
-    console.log(value);
+    setSearch(createSearchParams({
+      'search': search.get('search'),
+      'limit': value,
+    }));
+    console.log(search.toString());
   }
 
   const handleSearch = (value) => {
-    console.log(value);
+    setSearch({
+      ...search,
+      'search': value
+    });
   }
 
   const handleClear = () => {
-    console.log("clear");
+    setSearch({ search: "" });
   }
 
   const handlePageChange = (page) => {
@@ -91,7 +107,7 @@ export default function SuppliesTable() {
                       ">
         {/* Table header */}
         <Table 
-          header={[ 'Nombre', 'Descripción', 'Cantidad', 'Fecha de despacho', 'Fecha de caducidad', 'Acciones' ]} 
+          header={[ 'Material', 'Descripción', 'Cantidad', 'Fecha de despacho', 'Fecha de caducidad']} 
           rows={data}        
         />
 
