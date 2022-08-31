@@ -1,34 +1,52 @@
 
+import { useState, useEffect } from 'react';
 // Icons
 import { ReactComponent as EditIcon } from './../../assets/icons/edit.svg';
 import { ReactComponent as RemoveIcon } from './../../assets/icons/remove.svg';
+import { ReactComponent as ExpandIcon } from './../../assets/icons/expand.svg';
 
-// Components
-import Button from './button';
+export default function Table({headers, rows, onSelected}) {
 
-export default function Table({header, rows}) {
+  const [selected, setSelected] = useState({});
 
-  console.log(rows);
+  useEffect(() => {
+    if(onSelected) {
+      onSelected(selected);
+    }
+  }, [selected]);
 
   return (     
     <table className="table-auto  h-fit w-full space-x-2"> 
       {/* Table header */}
       <thead className="">
-        <tr className="text-left text-sm text-gray-900 dark:text-gray-100">
-        
-          {header.map(value => (
+        <tr className="text-left text-sm text-gray-900 dark:text-gray-100">        
+          {headers.map(header => (
             
               <th 
-                key={value} 
-                className="px-4 py-2 font-medium rounded-lg select-none hover:bg-light-3 hover:dark:bg-dark-3"
+                key={header.key} 
+                className={`pl-4 pr-2 py-2 font-medium rounded-lg select-none hover:bg-light-3 hover:dark:bg-dark-3
+                            ${selected.value===header.key ? 'bg-light-4 dark:bg-dark-4' : ''}`}
+                onClick={
+                  () => {
+                    if (selected.value === header.key && selected.order === 'asc') 
+                      setSelected({value: header.key, order: 'desc'});                    
+                    else if (selected.value === header.key && selected.order === 'desc') 
+                      setSelected({});
+                    else 
+                      setSelected({value: header.key, order: 'asc'});             
+                  }                  
+                }
               >
-                {value}
+                <div className="flex flex-row justify-between items-center">
+                  {header.value}
+                  {(selected.value === header.key && selected.order === 'asc')  && <ExpandIcon className="w-5 h-5" />}
+                  {(selected.value === header.key && selected.order === 'desc') && <ExpandIcon className="rotate-180 w-5 h-5" />}
+                </div>
               </th>
             
           ))}
         <th></th>
-        </tr>
-        
+        </tr>        
       </thead>
       
       {/* Table body */}
@@ -55,15 +73,15 @@ export default function Table({header, rows}) {
               </>
             ))}
           {row.actions && 
-            <td className="space-x-2 items-center h-full bg-light-1 dark:bg-dark-1 px-3">
-              <button className="bg-light-2 dark:bg-dark-2 rounded-lg p-0.5 hover:bg-light-3 hover:dark:bg-dark-3 h-full" onClick={row.actions.edit}>
-                <div className="flex flex-row justify-center space-x-1 items-center ">                  
+            <td className="flex justify-center items-center space-x-2 h-full  px-3">
+              <button className="bg-light-2 dark:bg-dark-2 rounded-lg p-0.5 hover:bg-light-3 hover:dark:bg-dark-3" onClick={row.actions.edit}>
+                <div className="flex flex-row justify-center space-x-1 items-center h-full">                  
                   <div className="text-gray-700 dark:text-gray-300"><EditIcon /></div>                  
                 </div>
               </button> 
-              <button className="bg-light-2 dark:bg-dark-2 rounded-lg p-0.5 text-cream-1 hover:text-white hover:bg-cream-1 h-full" 
+              <button className="bg-light-2 dark:bg-dark-2 rounded-lg p-0.5 text-cream-1 hover:text-white hover:bg-cream-1" 
                 onClick={row.actions.remove}>
-                <div className="flex flex-row justify-center space-x-1 items-center ">                  
+                <div className="flex flex-row justify-center space-x-1 items-center h-full">                  
                   <div className=""><RemoveIcon /></div>                  
                 </div>
               </button>
