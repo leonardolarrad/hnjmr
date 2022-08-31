@@ -1,6 +1,5 @@
 // Components
 import ContentHeader from "../common/content-header";
-import WaveHeader from "../common/wave-header";
 import SuppliesTable from "./supplies-table";
 import { ReactComponent as SupplyIcon }   from './../../assets/icons/vaccine.svg';
 
