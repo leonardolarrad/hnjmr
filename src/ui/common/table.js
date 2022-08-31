@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 // Icons
 import { ReactComponent as EditIcon } from './../../assets/icons/edit.svg';
 import { ReactComponent as RemoveIcon } from './../../assets/icons/remove.svg';
@@ -9,11 +9,10 @@ export default function Table({headers, rows, onSelected}) {
 
   const [selected, setSelected] = useState({});
 
+
   useEffect(() => {
-    if(onSelected) {
-      onSelected(selected);
-    }
-  }, [selected]);
+    onSelected(selected);
+  }, [selected, onSelected]);
 
   return (     
     <table className="table-auto  h-fit w-full space-x-2"> 
