@@ -117,22 +117,11 @@ export default function SuppliesTable() {
     }));
   }
 
-  /*
-  const handleSort = (sort) => {
-    setSearch(createSearchParams({
-      'search': search.get('search'),
-      'limit': search.get('limit'),
-      'offset': 0,
-      'sort': sort.value ? sort.value : 'date_delivery',
-      'order': sort.order ? sort.order.toUpperCase() : 'ASC',
-    }));
-  }
-  */
   const handleSort = React.useCallback((sort) => {
     setSearch(createSearchParams({
       'search': search.get('search'),
       'limit': search.get('limit'),
-      'offset': 0,
+      'offset': search.get('offset'),
       'sort': sort.value ? sort.value : 'date_delivery',
       'order': sort.order ? sort.order.toUpperCase() : 'ASC',
     }));

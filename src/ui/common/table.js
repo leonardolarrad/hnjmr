@@ -4,21 +4,24 @@ import { useState, useEffect, useCallback } from 'react';
 import { ReactComponent as EditIcon } from './../../assets/icons/edit.svg';
 import { ReactComponent as RemoveIcon } from './../../assets/icons/remove.svg';
 import { ReactComponent as ExpandIcon } from './../../assets/icons/expand.svg';
+import { ReactComponent as ViewIcon } from './../../assets/icons/view.svg';
 
 export default function Table({headers, rows, onSelected}) {
 
   const [selected, setSelected] = useState({});
 
-
   useEffect(() => {
     onSelected(selected);
-  }, [selected, onSelected]);
+  }, [selected, onSelected]); 
 
   return (     
-    <table className="table-auto  h-fit w-full space-x-2"> 
+    <table className="table-auto overflow-auto h-fit w-full space-x-2"> 
       {/* Table header */}
       <thead className="">
-        <tr className="text-left text-sm text-gray-900 dark:text-gray-100">        
+        <tr 
+          className="text-left text-sm text-gray-900 dark:text-gray-100"
+          key='header'
+        >        
           {headers.map(header => (
             
               <th 
@@ -44,21 +47,23 @@ export default function Table({headers, rows, onSelected}) {
               </th>
             
           ))}
-        <th></th>
+        <th key='space'></th>
         </tr>        
       </thead>
       
       {/* Table body */}
-      <tbody className="">
+      <tbody className="overflow-auto">
         {rows.map(row => (
           <>
           <tr 
-            className="hover:wave-l-2 text-left font-base text-sm select-none
+            className=" text-left font-base text-sm 
                        text-gray-700 dark:text-gray-300 
-                       hover:bg-cream-3 bg-no-repeat bg-cover bg-center  hover:text-gray-100"
+                       hover:bg-light-3 dark:hover:bg-dark-3 bg-no-repeat bg-cover bg-center 
+                       hover:text-gray-900 hover:dark:text-gray-100"
 
             key={row.id}
-            onClick={row.actions.view}
+            
+            
           >
             
             {row.values.map(value => (
@@ -72,10 +77,15 @@ export default function Table({headers, rows, onSelected}) {
               </>
             ))}
           {row.actions && 
-            <td className="flex justify-center items-center space-x-2 h-full  px-3">
-              <button className="bg-light-2 dark:bg-dark-2 rounded-lg p-0.5 hover:bg-light-3 hover:dark:bg-dark-3" onClick={row.actions.edit}>
+            <td key='actions' className="flex justify-center items-center space-x-2 h-full  px-3">
+              <button className="bg-light-2 dark:bg-dark-2 rounded-lg p-0.5 text-gray-700 dark:text-gray-300 hover:text-gray-200 hover:bg-cream-1" onClick={row.actions.view}>
                 <div className="flex flex-row justify-center space-x-1 items-center h-full">                  
-                  <div className="text-gray-700 dark:text-gray-300"><EditIcon /></div>                  
+                  <div className=""><ViewIcon /></div>                  
+                </div>
+              </button> 
+              <button className="bg-light-2 dark:bg-dark-2 rounded-lg p-0.5 text-gray-700 dark:text-gray-300 hover:text-gray-200 hover:bg-cream-1" onClick={row.actions.edit}>
+                <div className="flex flex-row justify-center space-x-1 items-center h-full">                  
+                  <div className=""><EditIcon /></div>                  
                 </div>
               </button> 
               <button className="bg-light-2 dark:bg-dark-2 rounded-lg p-0.5 text-cream-1 hover:text-white hover:bg-cream-1" 
