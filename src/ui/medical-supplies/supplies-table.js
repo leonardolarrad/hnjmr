@@ -14,6 +14,7 @@ import { ReactComponent as PrintIcon } from './../../assets/icons/print.svg';
 // Hooks
 import { useNavigate, useSearchParams, createSearchParams } from 'react-router-dom';
 import Pagination from "../common/pagination";
+import Popup from '../common/popup';
 
 export default function SuppliesTable() {
 
@@ -25,9 +26,18 @@ export default function SuppliesTable() {
     'search':'', 
     'offset':0,
     'sort':'date_delivery',
-    'order':'ASC'
+    'order':'DESC'
   });
   const [count, setCount] = React.useState(0);
+
+  const [modal, setModal ] = React.useState({
+    show: false, 
+    title: '', 
+    message: '', 
+    onAccept: () => setModal(modal => ({ ...modal, show: false })),
+    onCancel: () => setModal(modal => ({ ...modal, show: false }))
+  });
+  const [ refresh, setRefresh ] = React.useState(false);
   
   /* Handle http request/response */
   React.useEffect(() => {
@@ -67,14 +77,33 @@ export default function SuppliesTable() {
             ],
           'actions': {
             'view':   () => navigate(`${lot.id_lots}`),
-            'edit':   () => navigate(`:${lot.id_lots}/edit`),
-            'delete': () => navigate(`delete${lot.id_lots}`),
-          }          
-        }}));
+            'edit':   () => navigate(`${lot.id_lots}/edit`),
+            'delete': () => {             
+                console.log('delete') 
+                setModal(modal => ({ 
+                  ...modal, 
+                  show: true, 
+                  title: 'Eliminar', 
+                  message: '¿Está seguro que desea eliminar este registro? Esta acción será permanente.', 
+                  onAccept: () => {
+                    fetch('/api/lots/'+lot.id_lots, {
+                      method: 'DELETE',
+                    })
+                      .then(res => res.json())
+                      .then(data => { console.log(data)
+                      })
+                      .catch(error => console.error('Error:', error));
+                    setModal(modal => ({ ...modal, show: false }));
+                    //setRefresh(refresh => !refresh);
+                    navigate('');
+                  }
+                }));            
+            }    
+        }}}));
       })
       .catch(err => console.error(err));
 
-  }, [count, navigate, search]);
+  }, [refresh, count, navigate, search]);
 
   /* Handle table params */ 
   const handleDropdown = (value) => { 
@@ -123,26 +152,34 @@ export default function SuppliesTable() {
       'limit': search.get('limit'),
       'offset': search.get('offset'),
       'sort': sort.value ? sort.value : 'date_delivery',
-      'order': sort.order ? sort.order.toUpperCase() : 'ASC',
+      'order': sort.order ? sort.order.toUpperCase() : 'DESC',
     }));
   }, [search, setSearch]);
 
   return (    
     <>
+      <Popup
+        show={modal.show}
+        title={modal.title}
+        message={modal.message}
+        onAccept={modal.onAccept}
+        onCancel={modal.onCancel}
+      />
+
       <div className="flex flex-row justify-between items-center h-fit w-full space-x-2">
         
         {/* Dropdown */}
         <div className="flex flex-row w-fit h-fit">
           <Dropdown 
             items={[
-              {name:'Mostrar 10', value:10}, 
-              {name:'Mostrar 15', value:15},
-              {name:'Mostrar 20', value:20}, 
-              {name:'Mostrar 30', value:30}, 
-              {name:'Mostrar 50', value:50}, 
-              {name:'Mostrar 100', value:100},
-              {name:'Mostrar 200', value:200},
-              {name:'Mostrar 500', value:500}]} 
+              {value:'Mostrar 10',  key:10}, 
+              {value:'Mostrar 15',  key:15},
+              {value:'Mostrar 20',  key:20}, 
+              {value:'Mostrar 30',  key:30}, 
+              {value:'Mostrar 50',  key:50}, 
+              {value:'Mostrar 100', key:100},
+              {value:'Mostrar 200', key:200},
+              {value:'Mostrar 500', key:500}]} 
             onSelect={handleDropdown}
             defaultValue={20}
           />

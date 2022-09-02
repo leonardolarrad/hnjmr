@@ -18,10 +18,10 @@ export default function Dropdown({items, onSelect, defaultValue}) {
     >
       {items.map(item => (
         <option 
-          key={item.name}
-          value={item.value}
+          key={item.key}
+          value={item.key}
         >
-          {item.name}
+          {item.value}
         </option>
       ))}
     </select>

@@ -5,8 +5,8 @@ export default function ContentHeader(props) {
   const className = " flex flex-col w-auto h-[74px] rounded-xl " +
                     " bg-no-repeat bg-bottom bg-cover  "   +
                     (props.primary 
-                    ? " wave-l bg-cream-3 " 
-                    : " bg-light-4 dark:bg-dark-4 ");
+                    ? " wave-l bg-cream-3" 
+                    : " bg-light-5 dark:bg-dark-5 ");
 
   const titleClass = " font-medium text-2xl " +
                     (props.primary

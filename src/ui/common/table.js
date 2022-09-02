@@ -1,5 +1,5 @@
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 // Icons
 import { ReactComponent as EditIcon } from './../../assets/icons/edit.svg';
 import { ReactComponent as RemoveIcon } from './../../assets/icons/remove.svg';
@@ -9,6 +9,9 @@ import { ReactComponent as ViewIcon } from './../../assets/icons/view.svg';
 export default function Table({headers, rows, onSelected}) {
 
   const [selected, setSelected] = useState({});
+
+  console.log(headers);
+  console.log(rows);
 
   useEffect(() => {
     onSelected(selected);
@@ -61,15 +64,14 @@ export default function Table({headers, rows, onSelected}) {
                        hover:bg-light-3 dark:hover:bg-dark-3 bg-no-repeat bg-cover bg-center 
                        hover:text-gray-900 hover:dark:text-gray-100"
 
-            key={row.id}
-            
+            key={row.key}            
             
           >
             
             {row.values.map(value => (
               <>
                 <td
-                  key={value}
+                  key={'values'+row.key}
                   className="px-4 py-2 rounded-none w-fit"
                 >
                   {value}
@@ -77,7 +79,7 @@ export default function Table({headers, rows, onSelected}) {
               </>
             ))}
           {row.actions && 
-            <td key='actions' className="flex justify-center items-center space-x-2 h-full  px-3">
+            <td key={'actions'+row.key} className="flex justify-center items-center space-x-2 h-full  px-3">
               <button className="bg-light-2 dark:bg-dark-2 rounded-lg p-0.5 text-gray-700 dark:text-gray-300 hover:text-gray-200 hover:bg-cream-1" onClick={row.actions.view}>
                 <div className="flex flex-row justify-center space-x-1 items-center h-full">                  
                   <div className=""><ViewIcon /></div>                  
@@ -88,8 +90,10 @@ export default function Table({headers, rows, onSelected}) {
                   <div className=""><EditIcon /></div>                  
                 </div>
               </button> 
-              <button className="bg-light-2 dark:bg-dark-2 rounded-lg p-0.5 text-cream-1 hover:text-white hover:bg-cream-1" 
-                onClick={row.actions.remove}>
+              <button 
+                className="bg-light-2 dark:bg-dark-2 rounded-lg p-0.5 text-cream-1 hover:text-white hover:bg-cream-1" 
+                onClick={row.actions.delete}
+              >
                 <div className="flex flex-row justify-center space-x-1 items-center h-full">                  
                   <div className=""><RemoveIcon /></div>                  
                 </div>

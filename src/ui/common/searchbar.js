@@ -1,7 +1,7 @@
 import React from "react";
 import { ReactComponent as CancelIcon } from './../../assets/icons/cancel.svg';
 
-export default function Searchbar({onSearch, onClear}) {
+export default function Searchbar({onSearch, onClear, placeholder}) {
 
   const [search, setSearch] = React.useState('');
 
@@ -30,7 +30,7 @@ export default function Searchbar({onSearch, onClear}) {
           className="flex flex-row w-full bg-transparent outline-none pl-2 
                     placeholder-gray-400 dark:placeholder-gray-600 " 
           type="text" 
-          placeholder="Pruebe buscando un nombre o una fecha ..." 
+          placeholder={placeholder ? placeholder : "Pruebe buscando un nombre o una fecha ..." }
           value={search}
           onChange={handleChange}
         />

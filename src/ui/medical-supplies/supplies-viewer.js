@@ -9,19 +9,19 @@ import { ReactComponent as BackIcon } from './../../assets/icons/back.svg';
 
 // React hooks
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 // Hash algorithm for generating unique keys
 import {xxHash32} from 'js-xxhash';
 
-export default function SuppliesViewer({id}) {
+export default function SuppliesViewer() {
 
   const navigate = useNavigate();
   const [data, setData] = useState([]);
-  var crc32 = require("crc-32/crc32c");
+  const { id } = useParams();
 
   useEffect(() => {
-    fetch('/api/lots/1', { headers: {"accepts": "application/json"}})
+    fetch('/api/lots/'+id, { headers: {"accepts": "application/json"}})
       .then(res => res.json())
       .then(data => {
         setData(data); console.log(data);
@@ -31,37 +31,37 @@ export default function SuppliesViewer({id}) {
 
 
   return (
-    <div className="flex flex-col justify-between space-y-4 w-full h-full overflow-auto">
+    <div className="flex flex-col justify-center space-y-4 w-full h-full overflow-auto">
       <div className="flex flex-col p-2 space-y-3 w-full h-full overflow-auto">
         
         <ContentHeader primary icon={SupplyIcon} title='Insumo médico' subtitle="Información relacionada al tipo de material o insumo" />
-        
-        <table className="table-column items-start border-separate border-spacing-y-4 border-spacing-x-2 px-2"> 
-          <tbody>
-            <tr>
+                
+        <table className="table-fixed border-separate border-spacing-y-4 border-spacing-x-10 px-2  place-self-center w-full"> 
+          <tbody className="w-full">
+            <tr className="w-full ">
 
               {/* UUUID*/}
-              <td key='uuid'>
+              <td key='uuid' className="justify-center">
                 <div className="flex flex-row pl-1 items-end space-x-1">
                   <label className="text-left font-medium text-lg text-gray-900 dark:text-gray-100">Código</label>
-                  <label className="text-left text-sm text-gray-400 dark:text-gray-600">identificador único</label>
+                  <label className="text-left text-sm text-gray-400 dark:text-gray-600 pb-0.5">identificador único</label>
                 </div>
-                <div className="w-64 bg-light-2 dark:bg-dark-2 text-black dark:text-white  h-fit rounded-lg p-2">
+                <div className="flex flex-nowrap w-full min-w-[256px] bg-light-2 dark:bg-dark-2 text-black dark:text-white  h-fit rounded-lg p-2">
                   {data.id_lots && xxHash32(data.id_lots.toString())}
                 </div>
               </td>
 
             </tr>
-            <tr>
+            <tr className="w-full">
 
               {/* Name */}
               <td key='name'>
                 <div className="flex flex-row pl-1 items-end space-x-1">
                   <label className="text-left font-medium text-lg text-gray-900 dark:text-gray-100">Insumo</label>
-                  <label className="text-left text-sm text-gray-400 dark:text-gray-600">nombre del material</label>
+                  <label className="text-left text-sm text-gray-400 dark:text-gray-600 pb-0.5">nombre del material</label>
                 </div>
-                <div className="w-64 bg-light-2 dark:bg-dark-2 text-black dark:text-white  h-fit rounded-lg p-2">
-                  {'Aguja de Biopsia renal'}
+                <div className="flex flex-nowrap w-full min-w-[256px] bg-light-2 dark:bg-dark-2 text-black dark:text-white  h-fit rounded-lg p-2">
+                  {data.medicalSupply && data.medicalSupply.name_material}
                 </div>              
               </td>
               
@@ -69,10 +69,10 @@ export default function SuppliesViewer({id}) {
               <td key='desc'>
                 <div className="flex flex-row pl-1 items-end space-x-1">
                   <label className="text-left font-medium text-lg text-gray-900 dark:text-gray-100">Descripción</label>
-                  <label className="text-left text-sm text-gray-400 dark:text-gray-600">propiedades y detalles</label>
+                  <label className="text-left text-sm text-gray-400 dark:text-gray-600 pb-0.5">propiedades y detalles</label>
                 </div>
-                <div className="w-64 bg-light-2 dark:bg-dark-2 text-black dark:text-white  h-fit rounded-lg p-2">
-                  {'14g x 100mm'}
+                <div className="flex flex-nowrap w-full min-w-[256px]  bg-light-2 dark:bg-dark-2 text-black dark:text-white  h-fit rounded-lg p-2">
+                  {data.medicalSupply && data.medicalSupply.description}
                 </div>              
               </td>
 
@@ -82,17 +82,17 @@ export default function SuppliesViewer({id}) {
 
         <ContentHeader icon={PackageIcon} title='Lote' subtitle="Paquete de insumos despachados en una fecha determinada"/>
          
-        <table className="table-column items-start border-separate border-spacing-y-4 border-spacing-x-2 px-2 "> 
-          <tbody>
-            <tr>
+        <table className="table-fixed border-separate border-spacing-y-4 border-spacing-x-10 px-2  place-self-center w-full"> 
+          <tbody className="w-full">
+            <tr className="w-full">
 
               {/* Delivery date */}
               <td key='delivery_date'>
                 <div className="flex flex-row pl-1 items-end space-x-1">
                   <label className="text-left font-medium text-lg text-gray-900 dark:text-gray-100">Fecha de entrega</label>
-                  <label className="text-left text-sm text-gray-400 dark:text-gray-600">llegó el día</label>
+                  <label className="text-left text-sm text-gray-400 dark:text-gray-600 pb-0.5">llegó el día</label>
                 </div>
-                <div className="w-64 bg-light-2 dark:bg-dark-2 text-black dark:text-white  h-fit rounded-lg p-2">
+                <div className="flex flex-nowrap w-full min-w-[256px] bg-light-2 dark:bg-dark-2 text-black dark:text-white  h-fit rounded-lg p-2">
                   {data.date_delivery && data.date_delivery}
                 </div>                
               </td>
@@ -101,37 +101,35 @@ export default function SuppliesViewer({id}) {
               <td key='stock'>
                 <div className="flex flex-row pl-1 items-end space-x-1">
                   <label className="text-left font-medium text-lg text-gray-900 dark:text-gray-100">Cantidad</label>
-                  <label className="text-left text-sm text-gray-400 dark:text-gray-600">despachada o almacenada</label>
+                  <label className="text-left text-sm text-gray-400 dark:text-gray-600 pb-0.5">despachada o almacenada</label>
                 </div>
-                <div className="w-64 bg-light-2 dark:bg-dark-2 text-black dark:text-white  h-fit rounded-lg p-2">
+                <div className="flex flex-nowrap w-full min-w-[256px] bg-light-2 dark:bg-dark-2 text-black dark:text-white  h-fit rounded-lg p-2">
                   {data.stock && data.stock}
                 </div>                
               </td>
 
-              
-
             </tr>
-            <tr>
+            <tr className="w-full">
               
               {/* Due date */}
               <td key='due_date'>
                 <div className="flex flex-row pl-1 items-end space-x-1">
                   <label className="text-left font-medium text-lg text-gray-900 dark:text-gray-100">Fecha de vencimiento</label>
-                  <label className="text-left text-sm text-gray-400 dark:text-gray-600">vence el</label>
+                  <label className="text-left text-sm text-gray-400 dark:text-gray-600 pb-0.5">vence el</label>
                 </div>
-                <div className="w-64 bg-light-2 dark:bg-dark-2 text-black dark:text-white  h-fit rounded-lg p-2">
-                  {data.date_delivery && data.date_delivery}
+                <div className="flex flex-nowrap w-full min-w-[256px] bg-light-2 dark:bg-dark-2 text-black dark:text-white  h-fit rounded-lg p-2">
+                  {data.due_date && data.due_date}
                 </div>                
               </td>
 
-              {/* Due date */}
+              {/* State */}
               <td key='state'>
                 <div className="flex flex-row pl-1 items-end space-x-1">
                   <label className="text-left font-medium text-lg text-gray-900 dark:text-gray-100">Estado</label>
-                  <label className="text-left text-sm text-gray-400 dark:text-gray-600">¿vencido?</label>
+                  <label className="text-left text-sm text-gray-400 dark:text-gray-600 pb-0.5">¿vencido?</label>
                 </div>
-                <div className="w-64 bg-light-2 dark:bg-dark-2 text-black dark:text-white  h-fit rounded-lg p-2">
-                  {'No vencido'}
+                <div className="flex flex-nowrap w-full min-w-[256px] bg-light-2 dark:bg-dark-2 text-black dark:text-white  h-fit rounded-lg p-2">
+                  {(new Date(data.due_delivery) < Date.now()) ? 'Vencido' : 'No vencido'}
                 </div>                
               </td>
               
@@ -142,32 +140,32 @@ export default function SuppliesViewer({id}) {
 
         <ContentHeader icon={DonationIcon} title='Proveedor' subtitle="Organización, ente jurídico o donante proveedor"/>
 
-        <table className="table-column items-start border-separate border-spacing-y-4 border-spacing-x-2 px-2"> 
-          <tbody>
-            <tr>
+        <table className="table-fixed border-separate border-spacing-y-4 border-spacing-x-10 px-2  place-self-center w-full"> 
+          <tbody className="w-full">
+            <tr className="w-full">
 
               {/* Supplier name */}
               <td key='supplier_name'>
                 <div className="flex flex-row pl-1 items-end space-x-1">
                   <label className="text-left font-medium text-lg text-gray-900 dark:text-gray-100">Proveedor</label>
-                  <label className="text-left text-sm text-gray-400 dark:text-gray-600">natural o jurídico</label>
+                  <label className="text-left text-sm text-gray-400 dark:text-gray-600 pb-0.5">natural o jurídico</label>
                 </div>
-                <div className="w-64 bg-light-2 dark:bg-dark-2 text-black dark:text-white  h-fit rounded-lg p-2">
-                  {'Ministerio de salud'}
+                <div className="flex flex-nowrap w-full min-w-[256px] bg-light-2 dark:bg-dark-2 text-black dark:text-white  h-fit rounded-lg p-2">
+                  { data.supplier && data.supplier.name_supplier }
                 </div>
               </td>
 
             </tr>
-            <tr>
+            <tr className="w-full">
 
               {/* Supplier phone */}
               <td key='supplier_phone'>
                 <div className="flex flex-row pl-1 items-end space-x-1">
                   <label className="text-left font-medium text-lg text-gray-900 dark:text-gray-100">Télefono</label>
-                  <label className="text-left text-sm text-gray-400 dark:text-gray-600">de contacto</label>
+                  <label className="text-left text-sm text-gray-400 dark:text-gray-600 pb-0.5">de contacto</label>
                 </div>
-                <div className="w-64 bg-light-2 dark:bg-dark-2 text-black dark:text-white  h-fit rounded-lg p-2">
-                  {'+56988888888'}
+                <div className="flex flex-nowrap w-full min-w-[256px] bg-light-2 dark:bg-dark-2 text-black dark:text-white  h-fit rounded-lg p-2">
+                  { data.supplier && data.supplier.phone }
                 </div>              
               </td>
               
@@ -175,10 +173,10 @@ export default function SuppliesViewer({id}) {
               <td key='desc'>
                 <div className="flex flex-row pl-1 items-end space-x-1">
                   <label className="text-left font-medium text-lg text-gray-900 dark:text-gray-100">Dirección</label>
-                  <label className="text-left text-sm text-gray-400 dark:text-gray-600"></label>
+                  <label className="text-left text-sm text-gray-400 dark:text-gray-600 pb-0.5"></label>
                 </div>
-                <div className="w-64 bg-light-2 dark:bg-dark-2 text-black dark:text-white  h-fit rounded-lg p-2">
-                  {'Av. de la Libertad, Santiago'}
+                <div className="flex flex-nowrap w-full min-w-[256px] bg-light-2 dark:bg-dark-2 text-black dark:text-white  h-fit rounded-lg p-2">
+                  { data.supplier && data.supplier.address }
                 </div>              
               </td>
 

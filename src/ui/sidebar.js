@@ -26,7 +26,7 @@ function renderSidebarButton(icon, text, onClick, current, label) {
           {React.createElement(icon)}
         </div>}
         {text && <span>{text}</span>}
-        {label && <span className="text-sm bg-cream-1 text-gray-100 p-0.5 px-2 rounded-xl">{label}</span>}
+        {label && <span className="text-xs bg-cream-1 text-gray-100 p-[1px] px-2 rounded-xl">{label}</span>}
       </div>
     </button>
   );

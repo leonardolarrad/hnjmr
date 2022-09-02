@@ -14,9 +14,9 @@ export default function Button({text, icon, primary, onClick, extraStyle}) {
 
   return (
     <button className={className} onClick={onClick}>
-      <div className="flex flex-row justify-center space-x-1 items-center ">
-        {icon && <div className="text-gray-800 dark:text-gray-200">{React.createElement(icon)}</div>}
-        {text && <span className="px-1">{text}</span>}
+      <div className="flex flex-row justify-center space-x-0.5 items-center ">
+        {icon && <div className="">{React.createElement(icon)}</div>}
+        {text && <span className="px-0.5 pb-0.5">{text}</span>}
       </div>
     </button>
   );
