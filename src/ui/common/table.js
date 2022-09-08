@@ -1,17 +1,16 @@
 
 import { useState, useEffect } from 'react';
+
 // Icons
-import { ReactComponent as EditIcon } from './../../assets/icons/edit.svg';
+import { ReactComponent as EditIcon }   from './../../assets/icons/edit.svg';
 import { ReactComponent as RemoveIcon } from './../../assets/icons/remove.svg';
 import { ReactComponent as ExpandIcon } from './../../assets/icons/expand.svg';
-import { ReactComponent as ViewIcon } from './../../assets/icons/view.svg';
+import { ReactComponent as ViewIcon }   from './../../assets/icons/view.svg';
 
-export default function Table({headers, rows, onSelected}) {
+export default function Table({headers, rows, onSelected, isLoading}) {
 
   const [selected, setSelected] = useState({});
 
-  console.log(headers);
-  console.log(rows);
 
   useEffect(() => {
     onSelected(selected);
@@ -25,12 +24,22 @@ export default function Table({headers, rows, onSelected}) {
           className="text-left text-sm text-gray-900 dark:text-gray-100"
           key='header'
         >        
-          {headers.map(header => (
+        
+          {/* Loading */}
+          {false && 
+              [...Array(headers.length +1)].map((e, i) => 
+                <th className="px-2 py-2" key={'loading-header-'+i}>
+                  <div className="animate-pulse bg-light-3 dark:bg-dark-3 h-6 w-full rounded-md"></div>
+                </th>
+              )
+          }        
+
+          {true && headers.map(header => (
             
               <th 
                 key={header.key} 
                 className={`pl-4 pr-2 py-2 font-medium rounded-lg select-none hover:bg-light-3 hover:dark:bg-dark-3
-                            ${selected.value===header.key ? 'bg-light-4 dark:bg-dark-4' : ''}`}
+                            ${selected.value===header.key ? ' bg-light-4 dark:bg-dark-4 ' : ''}`}
                 onClick={
                   () => {
                     if (selected.value === header.key && selected.order === 'asc') 
@@ -50,22 +59,36 @@ export default function Table({headers, rows, onSelected}) {
               </th>
             
           ))}
-        <th key='space'></th>
+        <th key='space'><div className="invisible">acciones</div></th>
+            
         </tr>        
       </thead>
       
       {/* Table body */}
       <tbody className="overflow-auto">
-        {rows.map(row => (
+        
+        {/* Loading */}
+        {isLoading &&
+          [...Array(15)].map((e,i) =>
+            <tr key={'loading-row-'+i}>
+              {[...Array(headers.length +1)].map((e, j) =>
+                <td className="px-2 py-2" key={'loading-cell-'+j}>
+                  <div className="animate-pulse bg-light-2 dark:bg-dark-2 h-3 w-full rounded-sm"></div>
+                </td>
+              )}
+            </tr>
+          )
+        }
+
+        {!isLoading && rows.map(row => (
           <>
           <tr 
             className=" text-left font-base text-sm 
                        text-gray-700 dark:text-gray-300 
-                       hover:bg-light-3 dark:hover:bg-dark-3 bg-no-repeat bg-cover bg-center 
+                       hover:bg-light-4 dark:hover:bg-dark-3 bg-no-repeat bg-cover bg-center 
                        hover:text-gray-900 hover:dark:text-gray-100"
 
-            key={row.key}            
-            
+            key={row.key}                      
           >
             
             {row.values.map(value => (

@@ -28,7 +28,7 @@ export default function Searchbar({onSearch, onClear, placeholder}) {
       >
         <input 
           className="flex flex-row w-full bg-transparent outline-none pl-2 
-                    placeholder-gray-400 dark:placeholder-gray-600 " 
+                    placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none" 
           type="text" 
           placeholder={placeholder ? placeholder : "Pruebe buscando un nombre o una fecha ..." }
           value={search}

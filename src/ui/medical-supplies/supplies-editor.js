@@ -65,7 +65,15 @@ export default function SuppliesEditor() {
         setSelectedSupplier(data.supplier ? data.supplier.id_suppliers : 0);
         console.log(data);
       })
-      .catch(error => console.error('Error:', error));
+      .catch(error => {
+        setModal(modal => ({         
+          show: true,
+          title: 'Error de conexión',
+          message: 'No se pudo establecer conexión con el servidor. Intente de nuevo más tarde.',
+          more: error,
+          onAccept: () => setModal(modal => ({ ...modal, show: false })),                
+        }))        
+      });
   },[id]);
 
   /* Fetch supplies */
@@ -77,7 +85,15 @@ export default function SuppliesEditor() {
       .then(supplies => {
         setSupplies(supplies);
       })
-      .catch(error => console.error('Error:', error));
+      .catch(error => {
+        setModal(modal => ({         
+          show: true,
+          title: 'Error de conexión',
+          message: 'No se pudo establecer conexión con el servidor. Intente de nuevo más tarde.',
+          more: error,
+          onAccept: () => setModal(modal => ({ ...modal, show: false })),                
+        }))        
+      });
 
   },[search]);
 
@@ -104,6 +120,7 @@ export default function SuppliesEditor() {
         document.getElementById('scroll') ) {
 
         if (!isScrolledIntoView(document.getElementById(selectedSupply.id_medical_supplies))) {
+          document.getElementById(selectedSupply.id_medical_supplies).scrollIntoView(); 
           document.getElementById(selectedSupply.id_medical_supplies).scrollIntoView();          
           document.getElementById('scroll').scrollTo(0, 0);
         }
@@ -117,7 +134,15 @@ export default function SuppliesEditor() {
       .then(suppliers => {
         setSuppliers(suppliers); console.log(suppliers);
       })
-      .catch(error => console.error('Error:', error));
+      .catch(error => {
+        setModal(modal => ({         
+          show: true,
+          title: 'Error de conexión',
+          message: 'No se pudo establecer conexión con el servidor. Intente de nuevo más tarde.',
+          more: error,
+          onAccept: () => setModal(modal => ({ ...modal, show: false })),                
+        }))        
+      });
   } ,[]);
 
   /* Fetch selected supplier */
@@ -153,14 +178,22 @@ export default function SuppliesEditor() {
       error = "Debe seleccionar un insumo en la lista de insumos existentes.";
 
     if (error !== '') {
-      setModal(modal => ({ ...modal, show: true, title: 'Error', message: error }));
+      setModal(modal => ({ 
+        show: true, title: 'Error', message: error,
+        onAccept: () => setModal(modal => ({ ...modal, show: false }))
+      }));
       return;
     }
 
+    setModal({
+      show: true,
+      title: 'Guardando registro',
+      message: 'Por favor espere...',
+      isLoading: true,
+    });
+
     /* Create or update medical supply */
-  
-    console.log(option);
-    
+      
     const requestOptions = {
       method: option === 1 ? 'PATCH' : 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -173,8 +206,7 @@ export default function SuppliesEditor() {
     fetch('/api/medical-supplies/'+(option===1 ? selectedSupply.id_medical_supplies : ''), requestOptions)
       .then(response => response.json())
       .then(data => {
-        console.log(data)
-        
+                
         /* Create or update lot */
 
         const requestOptions = {
@@ -192,23 +224,37 @@ export default function SuppliesEditor() {
         fetch('/api/lots/'+(id ?? ''), requestOptions)
           .then(response => response.json())
           .then(lot => {
-            console.log(lot);
+            
+            /* When creating a new lot, show message and then redirect */
 
-            /* When creating a new lot, show message and redirect */
-
-            const message = id ? 'El insumo se ha actualizado correctamente.' : 'El insumo se ha creado correctamente.';
+            const message = id ? 
+              'El insumo se ha actualizado correctamente.' : 
+              'El insumo se ha creado correctamente.';
 
             setModal(modal => ({
-              ...modal, 
               show: true, 
-              title: 'Insumo', 
+              title: 'Registro de insumo', 
               message: message,
-              onAccept: () => { modal.show = false; navigate(-1);}
+              onAccept: () => { modal.show = false; navigate(-1);},
             }));
           })
-          .catch(error => console.error('Error:', error));
+          .catch(error => setModal(modal => ({            
+            show: true,
+            title: 'Error al guardar',            
+            message: 'No se pudo guardar el registro. Intente de nuevo más tarde.',
+            more: error,
+            onAccept: () => setModal(modal => ({ ...modal, show: false })),      
+          })));
       }) 
-      .catch(error => console.error('Error:', error));           
+      .catch(error => {
+        setModal(modal => ({         
+          show: true,
+          title: 'Error de conexión',
+          message: 'No se pudo establecer conexión con el servidor. Intente de nuevo más tarde.',
+          more: error,
+          onAccept: () => setModal(modal => ({ ...modal, show: false })),                
+        }))        
+      });           
     
   };
 
@@ -222,6 +268,7 @@ export default function SuppliesEditor() {
         <Popup 
           show={modal.show} 
           title={modal.title} 
+          isLoading={modal.isLoading}
           message={modal.message} 
           onAccept={modal.onAccept}
         />        
@@ -304,7 +351,7 @@ export default function SuppliesEditor() {
                 </div>
                 <input 
                   name="name"
-                  className="flex flex-nowrap w-full min-w-[256px] h-fit rounded-lg p-2 outline-none
+                  className="flex flex-nowrap w-full min-w-[100px] h-fit rounded-lg p-2 outline-none
                            bg-light-2 dark:bg-dark-2 text-black dark:text-white  "
                   value={form.name}
                   onChange={handleChange}
@@ -320,7 +367,7 @@ export default function SuppliesEditor() {
                 </div>
                 <input 
                   name="desc"
-                  className="flex flex-nowrap w-full min-w-[256px] h-fit rounded-lg p-2 outline-none
+                  className="flex flex-nowrap w-full min-w-[100px] h-fit rounded-lg p-2 outline-none
                            bg-light-2 dark:bg-dark-2 text-black dark:text-white  "
                   value={form.desc}
                   onChange={handleChange}
@@ -342,11 +389,11 @@ export default function SuppliesEditor() {
                 <label className="text-left text-sm text-cream-1 pb-0.5">* Obligatorio</label>
                 <div className="flex flex-row pl-1 items-end space-x-1">
                   <label className="text-left font-medium text-lg text-gray-900 dark:text-gray-100">Fecha de entrega</label>
-                  <label className="text-left text-sm text-gray-400 dark:text-gray-600 pb-0.5">formato aaaa-mm-dd</label>
+                  <label className="text-left text-sm text-gray-400 dark:text-gray-600 pb-0.5"></label>
                 </div>
                 <input 
                   name="date"
-                  className="flex flex-nowrap w-full min-w-[256px] h-fit rounded-lg p-2 outline-none
+                  className="flex flex-nowrap w-full min-w-[100px] h-fit rounded-lg p-2 outline-none
                            bg-light-2 dark:bg-dark-2 text-black dark:text-white  "
                   value={form.date}
                   onChange={handleChange}
@@ -362,7 +409,7 @@ export default function SuppliesEditor() {
                 </div>
                 <input 
                   name="stock"                  
-                  className="flex flex-nowrap w-full min-w-[256px] h-fit rounded-lg p-2 outline-none
+                  className="flex flex-nowrap w-full min-w-[100px] h-fit rounded-lg p-2 outline-none
                            bg-light-2 dark:bg-dark-2 text-black dark:text-white  "
                   value={form.stock}
                   onChange={handleChange}
@@ -377,11 +424,11 @@ export default function SuppliesEditor() {
                 <label className="text-left text-sm text-light-1 dark:text-dark-1 select-none pb-0.5">* Obligatorio</label>
                 <div className="flex flex-row pl-1 items-end space-x-1">
                   <label className="text-left font-medium text-lg text-gray-900 dark:text-gray-100">Fecha de vencimiento</label>
-                  <label className="text-left text-sm text-gray-400 dark:text-gray-600 pb-0.5">formato aaaa-mm-dd</label>
+                  <label className="text-left text-sm text-gray-400 dark:text-gray-600 pb-0.5"></label>
                 </div>
                 <input 
                   name="dueDate"
-                  className="flex flex-nowrap w-full min-w-[256px] h-fit rounded-lg p-2 outline-none
+                  className="flex flex-nowrap w-full min-w-[100px] h-fit rounded-lg p-2 outline-none
                            bg-light-2 dark:bg-dark-2 text-black dark:text-white  "
                   value={form.dueDate}
                   onChange={handleChange}
@@ -405,7 +452,7 @@ export default function SuppliesEditor() {
                   <label className="text-left font-medium text-lg text-gray-900 dark:text-gray-100">Proveedor</label>
                   <label className="text-left text-sm text-gray-400 dark:text-gray-600 pb-0.5">natural o jurídico</label>
                 </div>
-                <select className="p-2 rounded-lg h-fit border-none outline-none w-full min-w-[256px]
+                <select className="p-2 rounded-lg h-fit border-none outline-none w-full min-w-[100px]
                                    focus:outline-none text-gray-800 
                                  dark:text-gray-200 bg-light-2 dark:bg-dark-2 " 
                      
@@ -440,7 +487,7 @@ export default function SuppliesEditor() {
                 </div>
                 <input 
                   name="empty"
-                  className="flex flex-nowrap w-full min-w-[256px] h-fit rounded-lg p-2 outline-none
+                  className="flex flex-nowrap w-full min-w-[100px] h-fit rounded-lg p-2 outline-none
                            bg-light-2 dark:bg-dark-2 text-black dark:text-white  "
                   
                 />                

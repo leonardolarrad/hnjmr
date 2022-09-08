@@ -20,6 +20,7 @@ export default function SuppliesTable() {
 
   const navigate = useNavigate();
 
+  const [isLoading, setIsLoading] = React.useState(true);
   const [data, setData] = React.useState([]);
   const [search, setSearch] = useSearchParams({
     'limit':20, 
@@ -33,22 +34,23 @@ export default function SuppliesTable() {
   const [modal, setModal ] = React.useState({
     show: false, 
     title: '', 
-    message: '', 
+    message: '',  
     onAccept: () => setModal(modal => ({ ...modal, show: false })),
     onCancel: () => setModal(modal => ({ ...modal, show: false }))
   });
-  const [ refresh, setRefresh ] = React.useState(false);
   
   /* Handle http request/response */
   React.useEffect(() => {
 
+    setIsLoading(true);
+
     const getParams = () => {
       return '?' + createSearchParams({
-        'search' : search.get('search'),
-        'limit'   : search.get('limit'),
-        'offset'  : search.get('offset'),
-        'sort'    : search.get('sort'),
-        'order'   : search.get('order')
+        'search': search.get('search'),
+        'limit': search.get('limit'),
+        'offset': search.get('offset'),
+        'sort': search.get('sort'),
+        'order': search.get('order')
       }).toString(); 
     };
 
@@ -66,6 +68,7 @@ export default function SuppliesTable() {
     fetch('api/lots'+getParams())
       .then(res => res.json())
       .then(data => {
+
         setData(data.map(lot => { return {
           'key': lot.id_lots,
           'values': [
@@ -78,32 +81,58 @@ export default function SuppliesTable() {
           'actions': {
             'view':   () => navigate(`${lot.id_lots}`),
             'edit':   () => navigate(`${lot.id_lots}/edit`),
-            'delete': () => {             
-                console.log('delete') 
+            'delete': () => {      
                 setModal(modal => ({ 
                   ...modal, 
                   show: true, 
                   title: 'Eliminar', 
                   message: '¿Está seguro que desea eliminar este registro? Esta acción será permanente.', 
+                  onCancel: () => setModal(modal => ({ ...modal, show: false })),
                   onAccept: () => {
                     fetch('/api/lots/'+lot.id_lots, {
                       method: 'DELETE',
                     })
                       .then(res => res.json())
-                      .then(data => { console.log(data)
+                      .then(data => { 
+                        setModal(modal => ({
+                          ...modal,
+                          title: 'Error',
+                          message: 'No se pudo eliminar el registro. Intente de nuevo más tarde.',
+                          onAccept: () => setModal(modal => ({ ...modal, show: false })),       
+                          onCancel: null                 
+                        }))
                       })
-                      .catch(error => console.error('Error:', error));
+                      .catch(error => 
+                        setModal(modal => ({
+                          ...modal,
+                          title: 'Error',
+                          message: 'No se pudo eliminar el registro. Intente de nuevo más tarde.',
+                          more: error,
+                          onAccept: () => setModal(modal => ({ ...modal, show: false })),       
+                          onCancel: null                 
+                        })));
+                    
                     setModal(modal => ({ ...modal, show: false }));
-                    //setRefresh(refresh => !refresh);
                     navigate('');
                   }
                 }));            
             }    
         }}}));
+        setIsLoading(false);
       })
-      .catch(err => console.error(err));
-
-  }, [refresh, count, navigate, search]);
+      .catch(error => {
+        setIsLoading(false);
+        setModal(modal => ({
+          ...modal,
+          show: true,
+          title: 'Error de conexión',
+          message: 'No se pudo establecer conexión con el servidor. Intente de nuevo más tarde.',
+          more: error,
+          onAccept: () => setModal(modal => ({ ...modal, show: false })),       
+          onCancel: null                 
+        }))        
+      });
+  }, [count, navigate, search]);
 
   /* Handle table params */ 
   const handleDropdown = (value) => { 
@@ -158,15 +187,15 @@ export default function SuppliesTable() {
 
   return (    
     <>
-      <Popup
-        show={modal.show}
-        title={modal.title}
-        message={modal.message}
-        onAccept={modal.onAccept}
-        onCancel={modal.onCancel}
-      />
-
       <div className="flex flex-row justify-between items-center h-fit w-full space-x-2">
+        
+        <Popup
+          show={modal.show}
+          title={modal.title}
+          message={modal.message}
+          onAccept={modal.onAccept}
+          onCancel={modal.onCancel}
+        />
         
         {/* Dropdown */}
         <div className="flex flex-row w-fit h-fit">
@@ -214,6 +243,7 @@ export default function SuppliesTable() {
           ]}
           rows={data}     
           onSelected={handleSort}   
+          isLoading={isLoading}
         />
 
       </div>

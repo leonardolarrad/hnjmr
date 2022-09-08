@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:focus {
+    outline-color: #a82654
+}
+
 @layer components {
     .title-bar-drag {
         -webkit-app-region: drag;        

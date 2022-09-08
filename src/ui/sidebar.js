@@ -42,7 +42,7 @@ export default function Sidebar() {
       <div className="flex flex-col overflow-y-auto justify-between h-full w-fit min-w-min">
         <div className="flex flex-col space-y-2">
           {renderSidebarButton(HomeIcon, "Inicio", () => navigate("/"), location.pathname === "/")}
-          {renderSidebarButton(PatientIcon, "Pacientes y visitantes", () => navigate("/patients"), location.pathname.includes("/patients"))}
+          {renderSidebarButton(PatientIcon, "Pacientes", () => navigate("/patients"), location.pathname.includes("/patients"))}
           {renderSidebarButton(VaccineIcon, "Insumos médicos", () => navigate("/supplies"), location.pathname.includes("/supplies"))}
           {renderSidebarButton(DesktopIcon, "Bienes nacionales", () => navigate("/assets"), location.pathname.includes("/assets"))}
           {renderSidebarButton(GroupIcon, "Usuarios", () => navigate("/users"), location.pathname.includes("/users"), "admin")}
