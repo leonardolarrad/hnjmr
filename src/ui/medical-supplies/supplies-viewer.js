@@ -13,7 +13,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 // Hash algorithm for generating unique keys
-import {xxHash32} from 'js-xxhash';
+import { hash } from "./../../util/hash";
 
 export default function SuppliesViewer() {
 
@@ -22,7 +22,7 @@ export default function SuppliesViewer() {
   const { id } = useParams();
 
   const [modal, setModal ] = useState({
-    show: true, 
+    show: false, 
     title: '', 
     isLoading: false,
     message: '',  
@@ -89,7 +89,7 @@ export default function SuppliesViewer() {
                   <label className="text-left text-sm text-gray-400 dark:text-gray-600 pb-0.5">identificador único</label>
                 </div>
                 <div className="flex flex-nowrap w-full min-w-[100px] bg-light-2 dark:bg-dark-2 text-black dark:text-white  h-fit rounded-lg p-2">
-                  {data.id_lots && xxHash32(data.id_lots.toString())}
+                  {data.id_lots && hash(data.id_lots.toString())}
                 </div>
               </td>
 
