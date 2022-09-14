@@ -16,7 +16,7 @@ import { useNavigate, useSearchParams, createSearchParams } from 'react-router-d
 import Pagination from "../common/pagination";
 import Popup from '../common/popup';
 
-export default function SuppliesTable() {
+export default function AssetsTable() {
 
   const navigate = useNavigate();
 
@@ -26,9 +26,10 @@ export default function SuppliesTable() {
     'limit':20, 
     'search':'', 
     'offset':0,
-    'sort':'date_delivery',
+    'sort':'updated_at',
     'order':'DESC'
   });
+  
   const [count, setCount] = React.useState(0);
 
   const [modal, setModal ] = React.useState({
@@ -60,27 +61,31 @@ export default function SuppliesTable() {
       }).toString();
     }
     
-    fetch('api/lots'+getSearchParam()+'&limit=999999999999999999')
+    fetch('/api/national-assets'+getSearchParam()+'&limit=999999999999999999')
       .then(response => response.json())
       .then(data => setCount(data.length))
       .catch(error => console.error('Error:', error));
 
-    fetch('api/lots'+getParams())
+    fetch('/api/national-assets'+getParams())
       .then(res => res.json())
       .then(data => {
 
-        setData(data.map(lot => { return {
-          'key': lot.id_lots,
+        setData(data.map(asset => { return {
+          'key': asset.id_asset,
           'values': [
-              lot.medicalSupply.name_material, 
-              lot.medicalSupply.description,
-              lot.stock,
-              lot.date_delivery,
-              lot.due_date,
+              asset.name, 
+              asset.description,
+              asset.status,
+              //asset.note, not using this one
+              asset.date_acquisition,
+              asset.date_discontinued,
+              asset.storage,
+              asset.source,
+              //asset.destination, not using this one            
             ],
           'actions': {
-            'view':   () => navigate(`${lot.id_lots}`),
-            'edit':   () => navigate(`${lot.id_lots}/edit`),
+            'view':   () => navigate(`${asset.id_asset}`),
+            'edit':   () => navigate(`${asset.id_asset}/edit`),
             'delete': () => {      
                 setModal(modal => ({ 
                   ...modal, 
@@ -89,7 +94,7 @@ export default function SuppliesTable() {
                   message: '¿Está seguro que desea eliminar este registro? Esta acción será permanente.', 
                   onCancel: () => setModal(modal => ({ ...modal, show: false })),
                   onAccept: () => {
-                    fetch('/api/lots/'+lot.id_lots, {
+                    fetch('/api/national-assets/'+asset.id_asset, {
                       method: 'DELETE',
                     })
                       .then(res => { 
@@ -189,7 +194,7 @@ export default function SuppliesTable() {
       'search': search.get('search'),
       'limit': search.get('limit'),
       'offset': search.get('offset'),
-      'sort': sort.value ? sort.value : 'date_delivery',
+      'sort': sort.value ? sort.value : 'updated_at',
       'order': sort.order ? sort.order.toUpperCase() : 'DESC',
     }));
   }, [search, setSearch]);
@@ -240,15 +245,17 @@ export default function SuppliesTable() {
       </div>
       
       {/* Table */}
-      <div className="flex flex-col justify-between h-full w-full rounded-lg overflow-auto space-x-2 py-2
-                      ">        
+      <div className="flex flex-col justify-between h-full w-full rounded-lg space-x-2 py-2
+                      overflow-auto">        
         <Table 
           headers={[
-            { key:'name_material', value: 'Material'},
-            { key:'description',   value: 'Descripción'},
-            { key:'stock',         value: 'Cantidad'},
-            { key:'date_delivery', value: 'Fecha de entrega'},
-            { key:'due_date',      value: 'Fecha de vencimiento'},
+            { key:'name',              value: 'Nombre'},
+            { key:'description',       value: 'Descripción'},
+            { key:'status',            value: 'Estado'},
+            { key:'date_acquisition',  value: 'Fecha de adquisición'},
+            { key:'date_discontinued', value: 'Fecha de depreciación'},
+            { key:'storage',           value: 'Sector o almacén'},
+            { key:'source',            value: 'Proveedor'}
           ]}
           rows={data}     
           onSelected={handleSort}   

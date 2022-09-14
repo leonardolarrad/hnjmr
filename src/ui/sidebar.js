@@ -14,8 +14,8 @@ import { ReactComponent as SettingsIcon } from './../assets/icons/settings.svg';
 function renderSidebarButton(icon, text, onClick, current, label) {
   
   const className = " rounded-full w-full py-2 px-4 " +
-                    " text-gray-800 dark:text-gray-200 " +
-                    " hover:bg-light-3  dark:hover:bg-dark-3 " +
+                    " text-gray-800 dark:text-gray-200 focus:outline-none" +
+                    " hover:bg-light-3  dark:hover:bg-dark-3 focus:bg-light-2 dark:focus:bg-dark-2 " +
                     (current ? " bg-light-3  dark:bg-dark-3 " : "");
 
 
@@ -53,7 +53,7 @@ export default function Sidebar() {
           {renderSidebarButton(ShutdownIcon, "Cerrar sesión", () => navigate("/logout"), location.pathname.includes("/logout"))}
         </div>
       </div> 
-      <Outlet />
+      <Outlet className="overflow-auto" />
     </>
   );
 }

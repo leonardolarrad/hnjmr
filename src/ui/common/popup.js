@@ -24,7 +24,7 @@ export default function Popup({title, message, show, onAccept, onCancel, isLoadi
 
             {isLoading && 
               <div className="flex flex-row justify-center items-center w-fit pl-2">
-                <SpinIcon className="justify-self-center text-black dark:text-white bg-clip-text font-extrabold 
+                <SpinIcon className="justify-self-center text-gray-800 dark:text-gray-200 bg-clip-text font-extrabold 
                   bg-gradient-to-r from-cream-1 to-cream-2 animate-spin w-12 h-12 m-2"/>
 
               </div>
@@ -32,11 +32,11 @@ export default function Popup({title, message, show, onAccept, onCancel, isLoadi
             
             <div className='flex flex-col'>
               <div className="flex w-full h-fit items-center py-1 px-2 pl-4 ">
-                {title && <h1 className="text-left font-semibold text-black dark:text-white">{title}</h1>}
+                {title && <h1 className="text-left text-lg text-black dark:text-white">{title}</h1>}
               </div>
 
               <div className="flex w-full h-fit justify-start pl-4 items-center p-2">
-                {message && <h1 className="text-gray-900 dark:text-gray-100">{message}</h1>}
+                {message && <h1 className="text-gray-800 dark:text-gray-200">{message}</h1>}
               </div>
             </div>
 

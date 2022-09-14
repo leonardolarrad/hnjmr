@@ -49,6 +49,7 @@ export default function SuppliesEditor() {
   /* Fetch lots */
   useEffect(() => {
     if (!id) return;
+    console.log(id);
 
     fetch('/api/lots/'+id, { headers: {"accepts": "application/json"}})
       .then(res => res.json())
