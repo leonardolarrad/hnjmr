@@ -1,6 +1,5 @@
-
-import { ReactComponent as SpinIcon } from './../../assets/icons/spin.svg';
 import Button from "./button";
+import TailSpin from 'react-loading-icons/dist/esm/components/tail-spin';
 
 export default function Popup({title, message, show, onAccept, onCancel, isLoading}) {
 
@@ -8,7 +7,7 @@ export default function Popup({title, message, show, onAccept, onCancel, isLoadi
     return null;
 
   return (
-    <div className="  z-0 fixed top-0 bottom-0 left-0 right-0 
+    <div className="  z-50 fixed top-0 bottom-0 left-0 right-0 
                       flex flex-col w-full h- justify-center items-center 
                       bg-black bg-opacity-90 ">
       
@@ -24,8 +23,8 @@ export default function Popup({title, message, show, onAccept, onCancel, isLoadi
 
             {isLoading && 
               <div className="flex flex-row justify-center items-center w-fit pl-2">
-                <SpinIcon className="justify-self-center text-gray-800 dark:text-gray-200 bg-clip-text font-extrabold 
-                  bg-gradient-to-r from-cream-1 to-cream-2 animate-spin w-12 h-12 m-2"/>
+              
+                <TailSpin  stroke='#a82654' strokeWidth={1.5}  width="60px" height="60px"/>
 
               </div>
             }
@@ -36,7 +35,7 @@ export default function Popup({title, message, show, onAccept, onCancel, isLoadi
               </div>
 
               <div className="flex w-full h-fit justify-start pl-4 items-center p-2">
-                {message && <h1 className="text-gray-800 dark:text-gray-200">{message}</h1>}
+                {message && <h1 className="text-gray-700 dark:text-gray-300">{message}</h1>}
               </div>
             </div>
 

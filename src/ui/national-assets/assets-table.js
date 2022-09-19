@@ -15,6 +15,7 @@ import { ReactComponent as PrintIcon } from './../../assets/icons/print.svg';
 import { useNavigate, useSearchParams, createSearchParams } from 'react-router-dom';
 import Pagination from "../common/pagination";
 import Popup from '../common/popup';
+import { getUser } from '../../api/auth';
 
 export default function AssetsTable() {
 
@@ -44,6 +45,7 @@ export default function AssetsTable() {
   React.useEffect(() => {
 
     setIsLoading(true);
+    const user = getUser();
 
     const getParams = () => {
       return '?' + createSearchParams({
@@ -80,13 +82,13 @@ export default function AssetsTable() {
               asset.date_acquisition,
               asset.date_discontinued,
               asset.storage,
-              asset.source,
+              //asset.source,
               //asset.destination, not using this one            
             ],
           'actions': {
             'view':   () => navigate(`${asset.id_asset}`),
             'edit':   () => navigate(`${asset.id_asset}/edit`),
-            'delete': () => {      
+            'delete': !user.roles.includes('admin') ? null : () => {      
                 setModal(modal => ({ 
                   ...modal, 
                   show: true, 
@@ -96,6 +98,10 @@ export default function AssetsTable() {
                   onAccept: () => {
                     fetch('/api/national-assets/'+asset.id_asset, {
                       method: 'DELETE',
+                      headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + user.token
+                      }
                     })
                       .then(res => { 
 
@@ -255,7 +261,6 @@ export default function AssetsTable() {
             { key:'date_acquisition',  value: 'Fecha de adquisición'},
             { key:'date_discontinued', value: 'Fecha de depreciación'},
             { key:'storage',           value: 'Sector o almacén'},
-            { key:'source',            value: 'Proveedor'}
           ]}
           rows={data}     
           onSelected={handleSort}   

@@ -26,5 +26,9 @@
     .wave-cover-dark {
         background-image: url("./assets/waves/cover-dark.svg");
     }
+
+    .bg-avila {
+        background-image: url("./assets/images/bg-avila.jpg");
+    }
 }
 

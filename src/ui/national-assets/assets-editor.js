@@ -7,6 +7,7 @@ import { ReactComponent as AddIcon }      from './../../assets/icons/add.svg';
 import { ReactComponent as BackIcon }     from './../../assets/icons/back.svg';
 import { ReactComponent as SaveIcon }     from './../../assets/icons/save.svg';
 import { ReactComponent as CancelIcon }   from './../../assets/icons/cancel.svg';
+import { ReactComponent as DesktopIcon }  from './../../assets/icons/desktop.svg';
 
 import { useState, useEffect }    from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -186,14 +187,14 @@ export default function AssetsEditor({mode}) {
         {/* Header */}
         {mode === 'view' && 
           <ContentHeader 
-          primary icon={EditIcon} 
+          primary icon={DesktopIcon} 
           title='Bienes nacionales' 
           subtitle="Equipo médico, equipo de oficina u otros bienes" />
         }
         {mode === 'edit' && 
           <ContentHeader 
           primary icon={EditIcon} 
-          title='Editar bienes nacionaless' 
+          title='Editar bienes nacionales' 
           subtitle="Edición de equipo y mobiliario encargado al hospital" />
         }
         {mode === 'add' && 
@@ -209,8 +210,8 @@ export default function AssetsEditor({mode}) {
           {/* Row 1 */}
           <div className="flex flex-row h-fit w-full space-x-6 px-6">          
             {/* Name */}
-            <div className="flex flex-col h-full w-1/2 justify-end">
-              <label className="text-left text-sm text-cream-1 pb-0.5">* Obligatorio</label>
+            <div className="flex flex-col h-full w-1/2 justify-end pr-3">
+              {mode !== 'view' && <label className="text-left text-sm text-cream-1 pb-0.5">* Obligatorio</label>}              
               <div className="flex flex-row pl-1 justify-start items-end space-x-1">
                 <label className="text-left font-medium text-lg text-gray-900 dark:text-gray-100">Nombre</label>
                 <label className="text-left text-sm text-gray-400 dark:text-gray-600 pb-0.5">del bien nacional</label>
@@ -221,6 +222,8 @@ export default function AssetsEditor({mode}) {
                           bg-light-2 dark:bg-dark-2 text-black dark:text-white  "
                 value={form.name}
                 onChange={handleChange}
+                disabled={mode === 'view'}
+
               />
             </div>
             
@@ -230,7 +233,7 @@ export default function AssetsEditor({mode}) {
           <div className="flex flex-row h-fit w-full space-x-6 px-6">          
             
             {/* Description */}
-            <div className="flex flex-col h-full w-1/2 justify-end">
+            <div className="flex flex-col h-full w-1/2 justify-end pr-3">
               
               <div className="flex flex-row pl-1 justify-start items-end space-x-1">
                 <label className="text-left font-medium text-lg text-gray-900 dark:text-gray-100">Descripción</label>
@@ -242,6 +245,8 @@ export default function AssetsEditor({mode}) {
                           bg-light-2 dark:bg-dark-2 text-black dark:text-white  "
                 value={form.description}
                 onChange={handleChange}
+                disabled={mode === 'view'}
+
               />
             </div>
           </div>
@@ -250,7 +255,7 @@ export default function AssetsEditor({mode}) {
           <div className="flex flex-row h-fit w-full space-x-6 px-6">          
             {/* Adquisition date */}
             <div className="flex flex-col h-full w-1/2 justify-end">
-              <label className="text-left text-sm text-cream-1 pb-0.5">* Obligatorio</label>
+              {mode !== 'view' && <label className="text-left text-sm text-cream-1 pb-0.5">* Obligatorio</label>}
               <div className="flex flex-row pl-1 justify-start items-end space-x-1">
                 <label className="text-left font-medium text-lg text-gray-900 dark:text-gray-100">Fecha de adquisición</label>
                 <label className="text-left text-sm text-gray-400 dark:text-gray-600 pb-0.5">recibido el</label>
@@ -261,11 +266,13 @@ export default function AssetsEditor({mode}) {
                           bg-light-2 dark:bg-dark-2 text-black dark:text-white  "
                 value={form.date_acquisition}
                 onChange={handleChange}
+                disabled={mode === 'view'}
+
               />
             </div>
             {/* date_discontinued */}
             <div className="flex flex-col h-full w-1/2 justify-end">
-              <label className="text-left text-sm text-cream-1 pb-0.5">* Obligatorio</label>
+              {mode !== 'view' && <label className="text-left text-sm text-cream-1 pb-0.5">* Obligatorio</label>}
               <div className="flex flex-row pl-1 justify-start items-end space-x-1">
                 <label className="text-left font-medium text-lg text-gray-900 dark:text-gray-100">Fecha de depreciación</label>
                 <label className="text-left text-sm text-gray-400 dark:text-gray-600 pb-0.5">calculada para el</label>
@@ -276,6 +283,8 @@ export default function AssetsEditor({mode}) {
                           bg-light-2 dark:bg-dark-2 text-black dark:text-white  "
                 value={form.date_discontinued}
                 onChange={handleChange}
+                disabled={mode === 'view'}
+
               />
             </div>
           </div>
@@ -284,7 +293,7 @@ export default function AssetsEditor({mode}) {
           <div className="flex flex-row h-fit w-full space-x-6 px-6">      
             {/* Status */}
             <div className="flex flex-col h-full w-1/2 justify-end">
-              <label className="text-left text-sm text-cream-1 pb-0.5">* Obligatorio</label>
+              {mode !== 'view' && <label className="text-left text-sm text-cream-1 pb-0.5">* Obligatorio</label>}
               <div className="flex flex-row pl-1 justify-start items-end space-x-1">
                 <label className="text-left font-medium text-lg text-gray-900 dark:text-gray-100">Estado</label>
                 <label className="text-left text-sm text-gray-400 dark:text-gray-600 pb-0.5">del equipo</label>
@@ -295,11 +304,13 @@ export default function AssetsEditor({mode}) {
                           bg-light-2 dark:bg-dark-2 text-black dark:text-white  "
                 value={form.status}
                 onChange={handleChange}
+                disabled={mode === 'view'}
+
               />
             </div>    
             {/* storage */}
             <div className="flex flex-col h-full w-1/2 justify-end">
-              <label className="text-left text-sm text-cream-1 pb-0.5">* Obligatorio</label>
+              {mode !== 'view' && <label className="text-left text-sm text-cream-1 pb-0.5">* Obligatorio</label>}
               <div className="flex flex-row pl-1 w-full justify-start items-end space-x-1">
                 <label className="text-left font-medium text-lg text-gray-900 dark:text-gray-100">Sector o almacén</label>
                 <label className="text-left text-sm text-gray-400 dark:text-gray-600 pb-0.5">donde se encuentra el equipo</label>
@@ -310,6 +321,8 @@ export default function AssetsEditor({mode}) {
                           bg-light-2 dark:bg-dark-2 text-black dark:text-white  "
                 value={form.storage}
                 onChange={handleChange}
+                disabled={mode === 'view'}
+
               />
             </div>
             
@@ -319,7 +332,7 @@ export default function AssetsEditor({mode}) {
           <div className="flex flex-row h-fit w-full space-x-6 px-6">          
             {/* source */}
             <div className="flex flex-col h-full w-1/2 justify-end">
-              <label className="text-left text-sm text-cream-1 pb-0.5">* Obligatorio</label>
+              {mode !== 'view' && <label className="text-left text-sm text-cream-1 pb-0.5">* Obligatorio</label>}
               <div className="flex flex-row pl-1 justify-start items-end space-x-1">
                 <label className="text-left font-medium text-lg text-gray-900 dark:text-gray-100">Proveedor</label>
                 <label className="text-left text-sm text-gray-400 dark:text-gray-600 pb-0.5">quien proporcionó el equipo</label>
@@ -330,6 +343,8 @@ export default function AssetsEditor({mode}) {
                           bg-light-2 dark:bg-dark-2 text-black dark:text-white  "
                 value={form.source}
                 onChange={handleChange}
+                disabled={mode === 'view'}
+
               />
             </div>
             {/* destination */}
@@ -344,6 +359,8 @@ export default function AssetsEditor({mode}) {
                           bg-light-2 dark:bg-dark-2 text-black dark:text-white  "
                 value={form.destination}
                 onChange={handleChange}
+                disabled={mode === 'view'}
+
               />
             </div>
           </div>
@@ -352,7 +369,7 @@ export default function AssetsEditor({mode}) {
           <div className="flex flex-row h-fit w-full space-x-6 px-6">          
             
             {/* Note */}
-            <div className="flex flex-col h-full w-1/2 justify-end">
+            <div className="flex flex-col h-full w-1/2 justify-end pr-3">
               
               <div className="flex flex-row pl-1 justify-start items-end space-x-1">
                 <label className="text-left font-medium text-lg text-gray-900 dark:text-gray-100">Nota</label>
@@ -364,6 +381,8 @@ export default function AssetsEditor({mode}) {
                           bg-light-2 dark:bg-dark-2 text-black dark:text-white  "
                 value={form.note}
                 onChange={handleChange}
+                disabled={mode === 'view'}
+
               />
             </div>
           </div>

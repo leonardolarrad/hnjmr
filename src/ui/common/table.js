@@ -17,7 +17,7 @@ export default function Table({headers, rows, onSelected, isLoading}) {
   }, [selected, onSelected]); 
 
   return (     
-    <table className="table-auto overflow-auto h-fit w-full space-x-2"> 
+    <table className="table-auto overflow-auto h-fit w-full space-x-2 justify-start"> 
       {/* Table header */}
       <thead className="">
         <tr 
@@ -95,7 +95,7 @@ export default function Table({headers, rows, onSelected, isLoading}) {
               <>
                 <td
                   key={'values'+row.key}
-                  className="px-4 py-2 rounded-none w-fit"
+                  className="px-4 py-2 rounded-none w-fit "
                 >
                   {value}
                 </td>
@@ -113,14 +113,16 @@ export default function Table({headers, rows, onSelected, isLoading}) {
                   <div className=""><EditIcon /></div>                  
                 </div>
               </button> 
-              <button 
-                className="bg-light-2 dark:bg-dark-2 rounded-lg p-0.5 text-cream-1 hover:text-white hover:bg-cream-1" 
-                onClick={row.actions.delete}
-              >
-                <div className="flex flex-row justify-center space-x-1 items-center h-full">                  
-                  <div className=""><RemoveIcon /></div>                  
-                </div>
-              </button>
+              {row.actions.delete &&              
+                <button 
+                  className="bg-light-2 dark:bg-dark-2 rounded-lg p-0.5 text-cream-1 hover:text-white hover:bg-cream-1" 
+                  onClick={row.actions.delete}
+                >
+                  <div className="flex flex-row justify-center space-x-1 items-center h-full">                  
+                    <div className=""><RemoveIcon /></div>                  
+                  </div>
+                </button>
+              }
             </td>
           }
           
