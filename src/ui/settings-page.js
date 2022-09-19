@@ -80,6 +80,24 @@ export default function SettingsPage() {
           </div>
         </div>
 
+          {/* Row 3 */}
+          <div className="flex flex-row h-fit w-full space-x-6 px-6">          
+            {/* Id */}
+            <div className="flex flex-col h-full w-1/2 justify-end pr-3">
+              <div className="flex flex-row pl-1 justify-start items-end space-x-1">
+                <label className="text-left font-medium text-lg text-gray-900 dark:text-gray-100">Rol</label>
+                <label className="text-left text-sm text-gray-400 dark:text-gray-600 pb-0.5">privilegios de la cuenta</label>
+              </div>
+              <input 
+                name="role"
+                className="flex flex-nowrap w-full min-w-[100px] h-fit rounded-lg p-2 outline-none
+                          bg-light-2 dark:bg-dark-2 text-black dark:text-white  "
+                value={user.roles.includes('admin') ? 'Administrador' : 'Usuario'}
+                disabled
+              />
+            </div>            
+          </div>
+
       </div>
       <div className="flex flex-row justify-center space-x-2 items-center w-full h-fit pb-2">        
         <Button icon={BackIcon} text="Volver" onClick={() => {navigate(-1)}}/>  
