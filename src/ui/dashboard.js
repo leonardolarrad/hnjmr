@@ -7,6 +7,7 @@ import AssetsEditor from "./national-assets/assets-editor";
 import AssetsPage from "./national-assets/assets-page";
 import SettingsPage from "./settings-page";
 import Sidebar from "./sidebar";
+import UsersPage from "./users/users-page";
 
 export default function Dashboard() {
 
@@ -34,6 +35,9 @@ export default function Dashboard() {
           <Route path="assets/add" element={<AssetsEditor mode='add'/>} />
           <Route path="assets/:id/edit" element={<AssetsEditor mode='edit'/>} />
           
+          {/* Users */}
+          <Route path="users" element={<UsersPage />} />
+
           {/* Settings */}
           <Route path="settings" element={<SettingsPage />} />
 

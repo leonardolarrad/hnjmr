@@ -118,6 +118,16 @@ export default function LoginPage() {
       .then(res => res.json())
       .then(user => {
 
+        if (user.statusCode && user.statusCode === 401) {
+          setModal({
+            title: 'Acceso denegado',
+            message: 'Esta cuenta de usuario se encuentra deshabilitada. Contacte con el administrador del sistema',
+            show: true,
+            onAccept: () => { setModal({show: false}) }
+          });
+          return;
+        }
+
         if (user.isActive && user.isActive === false) {
           setModal({
             title: 'Usuario deshabilitado',
@@ -128,7 +138,6 @@ export default function LoginPage() {
           setForm({ ...form, password: '' });
           return;
         }
-
         user.user.token = data.token;
         setUser(user);
         navigate('/');
