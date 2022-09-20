@@ -1,3 +1,4 @@
+
 const path = require('path');
 
 const { app, BrowserWindow, ipcMain, nativeTheme } = require('electron')
@@ -12,11 +13,13 @@ function createWindow() {
     minHeight: 600,
     webPreferences: {
       nodeIntegration: true,
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, 'preload.js'),
+      webSecurity: false
     },
     show: false,
     autoHideMenuBar: true,
     frame: false,
+    icon: path.join(__dirname, '../assets/logo/512px-01.png')
   });
 
   // Set light theme by default
@@ -69,8 +72,19 @@ function createWindow() {
   );
   win.maximize();
   win.show();
-}
+
+  ipcMain.on('request-insta', (event, html) => {
     
+    const jsdom = require("jsdom");
+    const { JSDOM } = jsdom;
+
+    const dom = new JSDOM(html, { runScripts: "dangerously" });
+
+    console.log(dom.window.document);
+
+    win.webContents.send('insta', dom.window.document);
+  });
+}    
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.

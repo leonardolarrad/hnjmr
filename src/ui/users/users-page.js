@@ -137,7 +137,7 @@ export default function UsersPage() {
   };
 
   return ( 
-    <div className="flex flex-col w-full h-full space-y-2 p-2">  
+    <div className="flex flex-col w-full h-full space-y-6 p-2">  
 
         <Popup
           show={modal.show}
@@ -154,9 +154,9 @@ export default function UsersPage() {
         subtitle="Gestionar usuarios del sistema" 
       />
 
-      <table className="table-auto w-full overflow-auto">
+      <table className="table-auto w-full overflow-auto ">
         <thead>
-          <tr className="text-gray-800 dark:text-gray-200 text-sm">
+          <tr className="text-gray-800 dark:text-gray-200 text-sm text-left">
             <th className="px-4 py-2">Id</th>
             <th className="px-4 py-2">Nombre</th>
             <th className="px-4 py-2">Email</th>
@@ -167,7 +167,7 @@ export default function UsersPage() {
         </thead>
         <tbody>
           {users.map(user => (
-            <tr key={user.id} className="text-gray-700 dark:text-gray-300">
+            <tr key={user.id} className="text-gray-700 dark:text-gray-300 ">
               <td className="px-4 py-2">{user.id}</td>
               <td className="px-4 py-2">{user.fullName}</td>
               <td className="px-4 py-2">{user.email}</td>

@@ -8,7 +8,9 @@ contextBridge.exposeInMainWorld('ipc', {
   restore:     () => ipcRenderer.invoke('ipc:restore'),
   close:       () => ipcRenderer.invoke('ipc:close'),
 
-  // IPC from main to renderer
   handleMaximizeChanged: (callback) => ipcRenderer.on('maximize-changed', callback),
   handleToggleTheme: (callback) => ipcRenderer.on('toggle-theme', callback),
+
+  requestInsta: (html) => ipcRenderer.send('request-insta', html),
+  handleInsta: (callback) => ipcRenderer.on('insta', callback),
 });

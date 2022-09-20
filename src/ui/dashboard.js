@@ -1,5 +1,6 @@
 import { Route, Routes, Navigate } from "react-router-dom";
 import { getUser } from "../api/auth";
+import HomePage from "./home-page";
 import SuppliesEditor from "./medical-supplies/supplies-editor";
 import SuppliesPage from "./medical-supplies/supplies-page";
 import SuppliesViewer from "./medical-supplies/supplies-viewer";
@@ -22,6 +23,8 @@ export default function Dashboard() {
     <div className="flex flex-row w-full h-full space-x-2 p-2">   
       <Routes>
         <Route path="/*" element={<Sidebar />}>
+
+          <Route path="" element={<HomePage />} />
 
           {/* Medical Supplies */}
           <Route path="supplies" element={<SuppliesPage />} />
