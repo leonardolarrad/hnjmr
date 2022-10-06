@@ -12,8 +12,8 @@ export default function App() {
         <Titlebar />
       }
       <div 
-        className="flex flex-col justify-center items-center 
-                   h-screen w-full overflow-auto bg-light-1 dark:bg-dark-1"
+        className="flex flex-col justify-center items-center overflow-hidden
+                   h-screen w-full  bg-light-1 dark:bg-dark-1"
       >
         <Routes>
           <Route path="/*" element={<Dashboard />} />

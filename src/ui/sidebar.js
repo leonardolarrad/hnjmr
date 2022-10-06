@@ -36,7 +36,6 @@ function renderSidebarButton(icon, text, onClick, current, label) {
 export default function Sidebar() {
 
   const user = getUser();
-  console.log(user);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -59,7 +58,7 @@ export default function Sidebar() {
           {renderSidebarButton(ShutdownIcon, "Cerrar sesión", () => { setUser(null); navigate("/login");}, location.pathname.includes("/logout"))}
         </div>
       </div> 
-      <Outlet className="overflow-auto" />
+      <Outlet className="" />
     </>
   );
 }

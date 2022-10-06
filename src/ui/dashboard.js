@@ -1,19 +1,20 @@
 import { Route, Routes, Navigate } from "react-router-dom";
-import { getUser } from "../api/auth";
-import HomePage from "./home-page";
+import { getUser }    from "../api/auth";
+
+import HomePage       from "./home-page";
 import SuppliesEditor from "./medical-supplies/supplies-editor";
-import SuppliesPage from "./medical-supplies/supplies-page";
+import SuppliesPage   from "./medical-supplies/supplies-page";
+import SuppliesReport from "./medical-supplies/supplies-report.js";
 import SuppliesViewer from "./medical-supplies/supplies-viewer";
-import AssetsEditor from "./national-assets/assets-editor";
-import AssetsPage from "./national-assets/assets-page";
-import SettingsPage from "./settings-page";
-import Sidebar from "./sidebar";
-import UsersPage from "./users/users-page";
+import AssetsEditor   from "./national-assets/assets-editor";
+import AssetsPage     from "./national-assets/assets-page";
+import SettingsPage   from "./settings-page";
+import Sidebar        from "./sidebar";
+import UsersPage      from "./users/users-page";
 
 export default function Dashboard() {
 
   const user = getUser();
-  console.log(user);
 
   if (!user)
     return <Navigate to="/login" />;
@@ -31,6 +32,7 @@ export default function Dashboard() {
           <Route path="supplies/:id" element={<SuppliesViewer />} />
           <Route path="supplies/add" element={<SuppliesEditor />} />
           <Route path="supplies/:id/edit" element={<SuppliesEditor />} />
+          <Route path="supplies/print" element={<SuppliesReport />} />
 
           {/* National assets */}
           <Route path="assets" element={<AssetsPage />} />

@@ -9,6 +9,5 @@ export const setUser = (user) => {
         sessionStorage.removeItem('user');
         return;
     }
-
     sessionStorage.setItem('user', JSON.stringify(user.user));
 }

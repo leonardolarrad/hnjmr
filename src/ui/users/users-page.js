@@ -112,32 +112,43 @@ export default function UsersPage() {
   };
 
   const handleMakeAdmin = (account) => {
-    const currentUser = getUser();
+    setModal({
+      show: true,
+      title: 'Asignar rol de administrador',
+      message: `¿Está seguro que desea elevar los privilegios al usuario ${account.fullName}? Esta acción no se puede deshacer.`,
+      onAccept: () => {
+        setModal({ show: false });
+        const currentUser = getUser();
     
-    fetch(`api/users/${account.id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${currentUser.token}`
+        fetch(`api/users/${account.id}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${currentUser.token}`
+          },
+          body: JSON.stringify({
+            'roles': ['admin', 'user']
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          setUsers(users => users.map(user => {
+            if (user.id === account.id) {
+              user.roles = ['admin', 'user'];
+            }
+            return user;
+          }));
+        })
+        .catch(error => console.log(error));
       },
-      body: JSON.stringify({
-        'roles': ['admin', 'user']
-      })
-    })
-    .then(response => response.json())
-    .then(data => {
-      setUsers(users => users.map(user => {
-        if (user.id === account.id) {
-          user.roles = ['admin', 'user'];
-        }
-        return user;
-      }));
-    })
-    .catch(error => console.log(error));
+      onCancel: () => setModal({ show: false })
+    });  
+
+    
   };
 
   return ( 
-    <div className="flex flex-col w-full h-full space-y-6 p-2">  
+    <div className="flex flex-col w-full h-full space-y-6 p-2 overflow-auto">  
 
         <Popup
           show={modal.show}

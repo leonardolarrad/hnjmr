@@ -206,8 +206,10 @@ export default function AssetsTable() {
   }, [search, setSearch]);
 
   return (    
-    <>
-      <div className="flex flex-row justify-between items-center h-fit w-full space-x-2">
+   
+      <>
+
+        <div className="flex flex-row justify-between items-center h-fit w-full space-x-2">
         
         <Popup
           show={modal.show}
@@ -248,34 +250,33 @@ export default function AssetsTable() {
           <Button icon={PrintIcon} onClick={() => navigate("print")} />
         </div>
         
-      </div>
-      
-      {/* Table */}
-      <div className="flex flex-col justify-between h-full w-full rounded-lg space-x-2 py-2
-                      overflow-auto">        
-        <Table 
-          headers={[
-            { key:'name',              value: 'Nombre'},
-            { key:'description',       value: 'Descripción'},
-            { key:'status',            value: 'Estado'},
-            { key:'date_acquisition',  value: 'Fecha de adquisición'},
-            { key:'date_discontinued', value: 'Fecha de depreciación'},
-            { key:'storage',           value: 'Sector o almacén'},
-          ]}
-          rows={data}     
-          onSelected={handleSort}   
-          isLoading={isLoading}
-        />
+        </div>
+              
+        {/* Table */}
+        <div className="flex flex-col justify-between h-full w-full rounded-lg overflow-auto space-x-2 py-2">        
+          <Table 
+            headers={[
+              { key:'name',              value: 'Nombre'},
+              { key:'description',       value: 'Descripción'},
+              { key:'status',            value: 'Estado'},
+              { key:'date_acquisition',  value: 'Fecha de adquisición'},
+              { key:'date_discontinued', value: 'Fecha de depreciación'},
+              { key:'storage',           value: 'Sector o almacén'},
+            ]}
+            rows={data}     
+            onSelected={handleSort}   
+            isLoading={isLoading}
+          />
 
-      </div>
+        </div>
 
-      {/* Pagination */}
-      <div className="flex justify-center items-center h-fit">        
-        <Pagination 
-          currentPage={Math.max((search.get('offset')/search.get('limit')+1), 1)} 
-          totalPages={Math.max(Math.ceil(count/search.get('limit')), 1)} 
-          onPageChange={handlePageChange} />        
-      </div>
-    </>
+        {/* Pagination */}
+        <div className="flex justify-center items-center h-fit">        
+          <Pagination 
+            currentPage={Math.max((search.get('offset')/search.get('limit')+1), 1)} 
+            totalPages={Math.max(Math.ceil(count/search.get('limit')), 1)} 
+            onPageChange={handlePageChange} />        
+        </div>
+      </>
   );
 }

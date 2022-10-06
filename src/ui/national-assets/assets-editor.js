@@ -12,7 +12,7 @@ import { ReactComponent as DesktopIcon }  from './../../assets/icons/desktop.svg
 import { useState, useEffect }    from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { formatDate } from './../../util/date';
+import { formatDate, isValidDate } from './../../util/date';
 import Popup from "../common/popup";
 
 export default function AssetsEditor({mode}) {
@@ -96,8 +96,14 @@ export default function AssetsEditor({mode}) {
     if (!form.date_discontinued || form.date_discontinued === "") 
       error = "Existen campos obligatorios vacios. Por favor rellene el campo 'Fecha de depreciación'.";
 
+    if (isValidDate(form.date_discontinued) === false) 
+      error = "El campo 'Fecha de depreciación' no tiene un formato válido o no es una fecha válida.";
+
     if (!form.date_acquisition || form.date_acquisition === "")
       error = "Existen campos obligatorios vacios. Por favor rellene el campo 'Fecha de adquisición'.";
+
+    if (isValidDate(form.date_acquisition) === false)
+      error = "El campo 'Fecha de adquisición' no tiene un formato válido o no es una fecha válida.";
 
     if (!form.name || form.name === "")
       error = "Existen campos obligatorios vacios. Por favor rellene el campo 'Nombre'.";
@@ -258,7 +264,7 @@ export default function AssetsEditor({mode}) {
               {mode !== 'view' && <label className="text-left text-sm text-cream-1 pb-0.5">* Obligatorio</label>}
               <div className="flex flex-row pl-1 justify-start items-end space-x-1">
                 <label className="text-left font-medium text-lg text-gray-900 dark:text-gray-100">Fecha de adquisición</label>
-                <label className="text-left text-sm text-gray-400 dark:text-gray-600 pb-0.5">recibido el</label>
+                <label className="text-left text-sm text-gray-400 dark:text-gray-600 pb-0.5">formato aaaa-mm-dd</label>
               </div>
               <input 
                 name="date_acquisition"
@@ -275,7 +281,7 @@ export default function AssetsEditor({mode}) {
               {mode !== 'view' && <label className="text-left text-sm text-cream-1 pb-0.5">* Obligatorio</label>}
               <div className="flex flex-row pl-1 justify-start items-end space-x-1">
                 <label className="text-left font-medium text-lg text-gray-900 dark:text-gray-100">Fecha de depreciación</label>
-                <label className="text-left text-sm text-gray-400 dark:text-gray-600 pb-0.5">calculada para el</label>
+                <label className="text-left text-sm text-gray-400 dark:text-gray-600 pb-0.5">formato aaaa-mm-dd</label>
               </div>
               <input 
                 name="date_discontinued"

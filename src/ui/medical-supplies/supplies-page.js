@@ -6,7 +6,7 @@ import { ReactComponent as SupplyIcon }   from './../../assets/icons/vaccine.svg
 export default function SuppliesPage() {
 
   return ( 
-    <div className="flex flex-col w-full h-full space-y-2  p-2">            
+    <div className="flex flex-col w-full h-full space-y-2 p-2">            
       <ContentHeader 
         primary
         icon={SupplyIcon}
@@ -16,4 +16,5 @@ export default function SuppliesPage() {
       <SuppliesTable />
     </div>
   );
+  
 }

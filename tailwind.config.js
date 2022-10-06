@@ -24,6 +24,10 @@ module.exports = {
           4: '#e6e4e0'
         }
       },
+      screens: {
+        'sm': '599px',
+        'md': '900px',
+      },
     },
   },
   plugins: [],

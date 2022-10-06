@@ -16,7 +16,7 @@ import { useState, useEffect }    from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 // Util
-import {formatDate} from './../../util/date';
+import {formatDate, isValidDate} from './../../util/date';
 import Popup from "../common/popup";
 
 export default function SuppliesEditor() {
@@ -64,7 +64,7 @@ export default function SuppliesEditor() {
         });
         setSelectedSupply(data.medicalSupply);
         setSelectedSupplier(data.supplier ? data.supplier.id_suppliers : 0);
-        console.log(data);
+        
       })
       .catch(error => {
         setModal(modal => ({         
@@ -175,8 +175,16 @@ export default function SuppliesEditor() {
     if (!form.date || form.date === "")
       error = "Existen campos obligatorios vacios. Por favor rellene el campo 'Fecha de entrega'.";
 
+    if (!isValidDate(form.date))
+      error = "La fecha de entrega no es válida. Por favor ingrese una fecha válida.";
+
+    if (form.dueDate && !isValidDate(form.dueDate))
+      error = "La fecha de vencimiento no es válida. Por favor ingrese una fecha válida.";
+
     if (option === 1 && (!selectedSupply || !selectedSupply.id_medical_supplies))
       error = "Debe seleccionar un insumo en la lista de insumos existentes.";
+
+    
 
     if (error !== '') {
       setModal(modal => ({ 
@@ -227,6 +235,17 @@ export default function SuppliesEditor() {
           .then(lot => {
             
             /* When creating a new lot, show message and then redirect */
+            console.log(lot);
+
+            if (lot.statusCode === 400 || lot.statusCode === 500 || lot.statusCode === 401) {
+              setModal(modal => ({
+                title: 'Error interno',
+                message: 'Ha ocurrido un error inesperado.',
+                show: true,
+                onAccept: () => setModal({ show: false }),
+              }));  
+              return;
+            }
 
             const message = id ? 
               'El insumo se ha actualizado correctamente.' : 
@@ -328,7 +347,7 @@ export default function SuppliesEditor() {
             ))}
           </div>
           <Searchbar 
-            placeholder="Busque un insumo por su nombre"
+            placeholder="Buscar material"
             onSearch={(search) => { setSearch(search) }}
             onClear= {() => { setSearch('') }}
           />

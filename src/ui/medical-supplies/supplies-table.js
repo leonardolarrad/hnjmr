@@ -240,8 +240,7 @@ export default function SuppliesTable() {
       </div>
       
       {/* Table */}
-      <div className="flex flex-col justify-between h-full w-full rounded-lg overflow-auto space-x-2 py-2
-                      ">        
+      <div className="flex flex-col justify-between h-full w-full rounded-lg overflow-auto space-x-2 py-2">        
         <Table 
           headers={[
             { key:'name_material', value: 'Material'},

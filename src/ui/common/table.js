@@ -16,8 +16,8 @@ export default function Table({headers, rows, onSelected, isLoading}) {
     onSelected(selected);
   }, [selected, onSelected]); 
 
-  return (     
-    <table className="table-auto overflow-auto h-fit w-full space-x-2 justify-start"> 
+  return (   
+    <table className="table-auto h-fit w-full space-x-2 justify-start overflow-auto"> 
       {/* Table header */}
       <thead className="">
         <tr 
@@ -95,7 +95,7 @@ export default function Table({headers, rows, onSelected, isLoading}) {
               <>
                 <td
                   key={'values'+row.key}
-                  className="px-4 py-2 rounded-none w-fit "
+                  className="px-4 py-2 rounded-none w-fit align-top"
                 >
                   {value}
                 </td>
