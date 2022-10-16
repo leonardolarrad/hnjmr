@@ -15,10 +15,9 @@ import { ReactComponent as PrintIcon } from './../../assets/icons/print.svg';
 import { useNavigate, useSearchParams, createSearchParams } from 'react-router-dom';
 import Pagination from "../common/pagination";
 import Popup from '../common/popup';
-
 import { getUser } from '../../api/auth';
 
-export default function SuppliesTable() {
+export default function AssetsTable() {
 
   const navigate = useNavigate();
 
@@ -28,9 +27,10 @@ export default function SuppliesTable() {
     'limit':20, 
     'search':'', 
     'offset':0,
-    'sort':'date_delivery',
+    'sort':'updated_at',
     'order':'DESC'
   });
+  
   const [count, setCount] = React.useState(0);
 
   const [modal, setModal ] = React.useState({
@@ -63,27 +63,31 @@ export default function SuppliesTable() {
       }).toString();
     }
     
-    fetch('api/lots'+getSearchParam()+'&limit=999999999999999999')
+    fetch('/api/assets'+getSearchParam()+'&limit=999999999999999999')
       .then(response => response.json())
       .then(data => setCount(data.length))
       .catch(error => console.error('Error:', error));
 
-    fetch('api/lots'+getParams())
+    fetch('/api/assets'+getParams())
       .then(res => res.json())
       .then(data => {
 
-        setData(data.map(lot => { return {
-          'key': lot.id_lots,
+        setData(data.map(asset => { return {
+          'key': asset.id_asset,
           'values': [
-              lot.medicalSupply.name_material, 
-              lot.medicalSupply.description,
-              lot.stock,
-              lot.date_delivery,
-              lot.due_date,
+              asset.group ?? '00', 
+              asset.subgroup ?? '00',
+              asset.num ?? 'S/N',
+              asset.desc ?? 'No hay descripción disponible',
+              asset.tower,
+              asset.floor,
+              asset.room,
+              //asset.source,
+              //asset.destination, not using this one            
             ],
           'actions': {
-            'view':   () => navigate(`${lot.id_lots}`),
-            'edit':   () => navigate(`${lot.id_lots}/edit`),
+            'view':   () => navigate(`${asset.id_asset}`),
+            'edit':   () => navigate(`${asset.id_asset}/edit`),
             'delete': !user.roles.includes('admin') ? null : () => {      
                 setModal(modal => ({ 
                   ...modal, 
@@ -92,8 +96,12 @@ export default function SuppliesTable() {
                   message: '¿Está seguro que desea eliminar este registro? Esta acción será permanente.', 
                   onCancel: () => setModal(modal => ({ ...modal, show: false })),
                   onAccept: () => {
-                    fetch('/api/lots/'+lot.id_lots, {
+                    fetch('/api/assets/'+asset.id_asset, {
                       method: 'DELETE',
+                      headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + user.token
+                      }
                     })
                       .then(res => { 
 
@@ -133,7 +141,7 @@ export default function SuppliesTable() {
         setIsLoading(false);
       })
       .catch(error => {
-        setIsLoading(false);
+        //setIsLoading(false);
         setModal(modal => ({
           ...modal,
           show: true,
@@ -192,14 +200,16 @@ export default function SuppliesTable() {
       'search': search.get('search'),
       'limit': search.get('limit'),
       'offset': search.get('offset'),
-      'sort': sort.value ? sort.value : 'date_delivery',
+      'sort': sort.value ? sort.value : 'updated_at',
       'order': sort.order ? sort.order.toUpperCase() : 'DESC',
     }));
   }, [search, setSearch]);
 
   return (    
-    <>
-      <div className="flex flex-row justify-between items-center h-fit w-full space-x-2">
+   
+      <>
+
+        <div className="flex flex-row justify-between items-center h-fit w-full space-x-2">
         
         <Popup
           show={modal.show}
@@ -231,7 +241,7 @@ export default function SuppliesTable() {
           <Searchbar 
             onSearch={handleSearch}
             onClear={handleClear}
-            placeholder="Buscar por material o fecha"
+            placeholder="Buscar por número, descripción o torre"
           />
         </div>
 
@@ -241,32 +251,34 @@ export default function SuppliesTable() {
           <Button text="Reporte" icon={PrintIcon} onClick={() => navigate("print")} />
         </div>
         
-      </div>
-      
-      {/* Table */}
-      <div className="flex flex-col justify-between h-full w-full rounded-lg overflow-auto space-x-2 py-2">        
-        <Table 
-          headers={[
-            { key:'name_material', value: 'Material'},
-            { key:'description',   value: 'Descripción'},
-            { key:'stock',         value: 'Cantidad'},
-            { key:'date_delivery', value: 'Fecha de entrega'},
-            { key:'due_date',      value: 'Fecha de vencimiento'},
-          ]}
-          rows={data}     
-          onSelected={handleSort}   
-          isLoading={isLoading}
-        />
+        </div>
+              
+        {/* Table */}
+        <div className="flex flex-col justify-between h-full w-full rounded-lg overflow-auto space-x-2 py-2">        
+          <Table 
+            headers={[
+              { key:'group',     value: 'Grupo'},
+              { key:'subgroup',  value: 'Subgrupo'},
+              { key:'num',       value: 'Número'},
+              { key:'desc',      value: 'Descripción'},
+              { key:'tower',     value: 'Torre'},
+              { key:'floor',     value: 'Piso'},
+              { key:'room',      value: 'Habitación'},
+            ]}
+            rows={data}     
+            onSelected={handleSort}   
+            isLoading={isLoading}
+          />
 
-      </div>
+        </div>
 
-      {/* Pagination */}
-      <div className="flex justify-center items-center h-fit">        
-        <Pagination 
-          currentPage={Math.max((search.get('offset')/search.get('limit')+1), 1)} 
-          totalPages={Math.max(Math.ceil(count/search.get('limit')), 1)} 
-          onPageChange={handlePageChange} />        
-      </div>
-    </>
+        {/* Pagination */}
+        <div className="flex justify-center items-center h-fit">        
+          <Pagination 
+            currentPage={Math.max((search.get('offset')/search.get('limit')+1), 1)} 
+            totalPages={Math.max(Math.ceil(count/search.get('limit')), 1)} 
+            onPageChange={handlePageChange} />        
+        </div>
+      </>
   );
 }

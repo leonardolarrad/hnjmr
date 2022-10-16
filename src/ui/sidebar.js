@@ -47,7 +47,7 @@ export default function Sidebar() {
           {renderSidebarButton(HomeIcon, "Inicio", () => navigate("/"), location.pathname === "/")}
           {/*renderSidebarButton(PatientIcon, "Pacientes", () => navigate("/patients"), location.pathname.includes("/patients"))*/}
           {renderSidebarButton(VaccineIcon, "Insumos médicos", () => navigate("/supplies"), location.pathname.includes("/supplies"))}
-          {renderSidebarButton(DesktopIcon, "Bienes nacionales", () => navigate("/assets"), location.pathname.includes("/assets"))}
+          {renderSidebarButton(DesktopIcon, "Bienes y activos", () => navigate("/assets"), location.pathname.includes("/assets"))}
           { user && user.roles.includes('admin') && 
             renderSidebarButton(GroupIcon, "Usuarios", () => navigate("/users"), location.pathname.includes("/users"), "admin")
           }
@@ -56,6 +56,7 @@ export default function Sidebar() {
           {renderSidebarButton(HelpIcon, "Ayuda", () => navigate("/help"), location.pathname.includes("/help"))}
           {renderSidebarButton(SettingsIcon, "Configuración", () => navigate("/settings"), location.pathname.includes("/settings"))}
           {renderSidebarButton(ShutdownIcon, "Cerrar sesión", () => { setUser(null); navigate("/login");}, location.pathname.includes("/logout"))}
+          <p className="invisible text-gray-700 dark:text-gray-300 self-center text-xs">Hecho con ❤ por ucabistas.</p>
         </div>
       </div> 
       <Outlet className="" />

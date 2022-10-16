@@ -2,7 +2,7 @@ import React from "react";
 
 export default function ContentHeader(props) {
 
-  const className = " flex flex-col w-auto h-[74px] rounded-xl " +
+  const className = " flex flex-col w-auto h-[74px] rounded-[4px] " +
                     " bg-no-repeat bg-bottom bg-cover  "   +
                     (props.primary 
                     ? " wave-l bg-cream-3" 

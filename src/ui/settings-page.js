@@ -99,9 +99,7 @@ export default function SettingsPage() {
           </div>
 
       </div>
-      <div className="flex flex-row justify-center space-x-2 items-center w-full h-fit pb-2">        
-        <Button icon={BackIcon} text="Volver" onClick={() => {navigate('/')}}/>  
-      </div>
+      
     </div>
     </>
   );

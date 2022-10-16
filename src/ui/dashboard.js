@@ -6,11 +6,12 @@ import SuppliesEditor from "./medical-supplies/supplies-editor";
 import SuppliesPage   from "./medical-supplies/supplies-page";
 import SuppliesReport from "./medical-supplies/supplies-report.js";
 import SuppliesViewer from "./medical-supplies/supplies-viewer";
-import AssetsEditor   from "./national-assets/assets-editor";
-import AssetsPage     from "./national-assets/assets-page";
+import AssetsEditor   from "./assets/assets-editor";
+import AssetsPage     from "./assets/assets-page";
 import SettingsPage   from "./settings-page";
 import Sidebar        from "./sidebar";
 import UsersPage      from "./users/users-page";
+import AssetsReport   from "./assets/assets-report";
 
 export default function Dashboard() {
 
@@ -39,6 +40,7 @@ export default function Dashboard() {
           <Route path="assets/:id" element={<AssetsEditor mode='view'/>} />
           <Route path="assets/add" element={<AssetsEditor mode='add'/>} />
           <Route path="assets/:id/edit" element={<AssetsEditor mode='edit'/>} />
+          <Route path="assets/print" element={<AssetsReport />} />
           
           {/* Users */}
           <Route path="users" element={<UsersPage />} />
