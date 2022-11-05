@@ -73,7 +73,7 @@ export default function Table({headers, rows, onSelected, isLoading}) {
             <tr key={'loading-row-'+i}>
               {[...Array(headers.length +1)].map((e, j) =>
                 <td className="px-2 py-2" key={'loading-cell-'+j}>
-                  <div className="animate-pulse bg-light-2 dark:bg-dark-2 h-5 w-full rounded-sm"></div>
+                  <div className="animate-pulse bg-light-4 dark:bg-dark-2 h-5 w-full rounded-sm"></div>
                 </td>
               )}
             </tr>

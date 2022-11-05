@@ -17,7 +17,7 @@ export const towers = [
                 rooms: [
                     'Catedra',
                     'Biblioteca',
-                    'Informatica',
+                    'Informática',
                     'Reproducción',
                     'Sociedad Médica',
                 ]
@@ -25,7 +25,7 @@ export const towers = [
             {
                 name: 'Piso 3',
                 rooms: [
-                    'Cirugia General',
+                    'Cirugía General',
                     'Epidermiología',
                     'Genética',
                     'Neurología',
@@ -178,7 +178,7 @@ export const towers = [
         ]
     }, // Torre de Aislamiento
     {
-        name: 'Torre de Salud Mental',
+        name: 'Torre de Archivo',
         floors: [
             {
                 name: 'Piso 1',

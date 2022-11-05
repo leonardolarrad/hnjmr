@@ -12,6 +12,7 @@ import SettingsPage   from "./settings-page";
 import Sidebar        from "./sidebar";
 import UsersPage      from "./users/users-page";
 import AssetsReport   from "./assets/assets-report";
+import HelpPage from "./help-page";
 
 export default function Dashboard() {
 
@@ -45,8 +46,13 @@ export default function Dashboard() {
           {/* Users */}
           <Route path="users" element={<UsersPage />} />
 
+          {/* Help */}
+          <Route path="help" element={<HelpPage />} />
+
           {/* Settings */}
           <Route path="settings" element={<SettingsPage />} />
+
+
 
         </Route>
       </Routes>

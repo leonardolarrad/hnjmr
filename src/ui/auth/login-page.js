@@ -194,7 +194,7 @@ export default function LoginPage() {
                 <div className="flex flex-col h-full w-full justify-end">                
                   <div className="flex flex-row pl-1 justify-start items-end space-x-1">
                     <label className="text-left font-medium text-lg text-gray-800 dark:text-gray-200">Correo electrónico</label>
-                    <label className="text-left text-sm text-gray-400 dark:text-gray-600 pb-0.5">usuario</label>
+                    <label className="text-left text-sm text-gray-400 dark:text-gray-600 pb-0.5">en mínusculas</label>
                   </div>
                   <input 
                     name="email"

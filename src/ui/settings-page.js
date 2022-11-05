@@ -1,14 +1,10 @@
 
 import ContentHeader from "./common/content-header";
-import Button        from "./common/button";
-import { ReactComponent as BackIcon }     from './../assets/icons/back.svg';
 import { ReactComponent as DesktopIcon }  from './../assets/icons/settings.svg';
-import { useNavigate } from "react-router-dom";
 import { getUser } from "../api/auth";
 
 export default function SettingsPage() {
 
-  const navigate = useNavigate();
   const user = getUser();
 
   return (

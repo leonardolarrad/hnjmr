@@ -64,7 +64,6 @@ export default function AssetsReport() {
         // format if tower exists but not floor: Tower
         const location = (item) => {
           let location = '';
-          console.log(item);
           if (item.tower) location += item.tower;
           if (item.floor) location += ', ' + item.floor;
           if (item.room) location += ', ' + item.room;
@@ -77,11 +76,12 @@ export default function AssetsReport() {
           row.serial ?? 'N/A', row.cin ?? 'N/A', row.quantity ?? 'N/A', row.unit_value ?? 'N/A'
         ]);
 
+        console.log(tableBody);
+
         const date = new Date().toLocaleDateString('es-ES', { year: 'numeric', month: '2-digit', day: '2-digit' });
 
         // Create pdf
         let doc = new jsPDF();
-        console.log(doc);
 
         doc.addImage(header, 'JPG', 3, 3, 202.522666667, 19.812, undefined, false);
         doc.setTextColor(60,60,60);
@@ -92,6 +92,7 @@ export default function AssetsReport() {
         // Add table to pdf
         doc.autoTable({
           head: [tableHeader],
+          // get only first 1000 rows body
           body: tableBody,
           theme: 'grid',
           styles: {
@@ -122,16 +123,22 @@ export default function AssetsReport() {
           },
           margin: { top: 30 },          
         });
-
+        
         // Generate report
         
         const filename = 'HNJMR - REPORTE BIENES Y ACTIVOS - ' + date + '.pdf';
-        doc.output('dataurlnewwindow', filename);
+        
+        if (tableBody.length < 500) {
+          doc.output('dataurlnewwindow', filename);
+        } else {
+          doc.save(filename);
+        }
 
         setModal({
           show: true,
           title: 'Reporte generado',
-          message: 'El reporte se ha generado satisfactoriamente.',
+          message: 'El reporte se ha generado satisfactoriamente. ' + 
+            (tableBody.length < 500 ? 'Vista previa disponible en una nueva ventana.' : 'No se ha podido mostrar la vista previa debido a que el reporte es muy largo. Guarde el archivo PDF'),
           onAccept: () => setModal({ show: false }),
         });
       })
