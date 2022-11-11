@@ -43,7 +43,7 @@ export default function AssetsEditor({mode}) {
     if (!id) 
       return;
 
-    fetch('/api/assets/'+id, { headers: {"accepts": "application/json"}})
+    fetch('https://hnjmr-j3fs.onrender.com/api/assets/'+id, { headers: {"accepts": "application/json"}})
       .then(res => res.json())
       .then(asset => {
         
@@ -126,6 +126,8 @@ export default function AssetsEditor({mode}) {
       show: true,
     });
 
+    console.log(form);
+
     // Send http request     
     const requestOptions = {
       method: id ? 'PATCH' : 'POST',
@@ -141,12 +143,12 @@ export default function AssetsEditor({mode}) {
         room: form.room !== '' ? form.room : null,
         serial: form.serial !== '' ? form.serial : null,
         cin: form.cin !== '' ? form.cin : null,
-        unit_value: form.unit_value !== '' ? form.unit_value : null,
-        quantity: form.quantity !== '' ? form.quantity : null
+        unit_value: form.unit_value !== '' ? parseInt(form.unit_value) : null,
+        quantity: form.quantity !== '' ? parseInt(form.quantity) : null
       })
     };
 
-    fetch('/api/assets/' + (id ? id : ''), requestOptions)
+    fetch('https://hnjmr-j3fs.onrender.com/api/assets/' + (id ? id : ''), requestOptions)
       .then(response => response.json())
       .then(data => {
         
@@ -187,16 +189,18 @@ export default function AssetsEditor({mode}) {
   return (
 
     <>    
-    <div className="flex flex-col justify-center space-y-4 w-full h-full overflow-auto">
-      <div id='scroll' className="flex flex-col p-2 space-y-3 w-full h-full overflow-auto">
-        
-        <Popup 
+      <Popup 
           show={modal.show} 
           title={modal.title} 
           isLoading={modal.isLoading}
           message={modal.message} 
           onAccept={modal.onAccept}
-        />        
+        />   
+
+    <div className="flex flex-col justify-center space-y-4 w-full h-full overflow-auto">
+      <div id='scroll' className="flex flex-col p-2 space-y-3 w-full h-full overflow-auto">
+        
+             
           
         {/* Header */}
         {mode === 'view' && 

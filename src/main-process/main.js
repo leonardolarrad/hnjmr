@@ -27,7 +27,7 @@ function createWindow() {
   nativeTheme.themeSource = 'light'
 
   // Open the DevTools.
-  if (isDev) {
+  if (false) {
     win.webContents.openDevTools({ mode: 'detach' });
   };
 
@@ -80,8 +80,6 @@ function createWindow() {
     const { JSDOM } = jsdom;
 
     const dom = new JSDOM(html, { runScripts: "dangerously" });
-
-    console.log(dom.window.document);
 
     win.webContents.send('insta', dom.window.document);
   });
