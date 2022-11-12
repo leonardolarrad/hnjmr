@@ -5,6 +5,7 @@ using namespace std;
 
 void HideConsole()
 {
+    ::FreeConsole();
     ::ShowWindow(::GetConsoleWindow(), SW_HIDE);
 }
 
