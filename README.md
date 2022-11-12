@@ -32,5 +32,8 @@ y para ejecutar la aplicación en modo browser
 
     $ npm run browser
 
-## Construir y distribuir (producción)
+## Construir (entorno de producción)
 
+    $ npm run build
+
+Esto construirá todos los archivos necesarios en la carpeta `build`. Para ejecutar la aplicación utilice `hnjmr.exe`.
