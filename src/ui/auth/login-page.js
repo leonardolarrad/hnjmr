@@ -72,7 +72,7 @@ export default function LoginPage() {
       isLoading: true,
     });      
 
-    fetch('https://hnjmr-j3fs.onrender.com/api/auth/login', {
+    fetch('/api/auth/login', {
       method: 'POST',
       mode: 'cors',
       headers: {
