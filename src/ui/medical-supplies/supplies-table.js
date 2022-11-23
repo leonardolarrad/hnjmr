@@ -63,12 +63,12 @@ export default function SuppliesTable() {
       }).toString();
     }
     
-    fetch('https://hnjmr-j3fs.onrender.com/api/lots'+getSearchParam()+'&limit=999999999999999999')
+    fetch('https://hnjmr-server.onrender.com/api/lots'+getSearchParam()+'&limit=999999999999999999')
       .then(response => response.json())
       .then(data => setCount(data.length))
       .catch(error => console.error('Error:', error));
 
-    fetch('https://hnjmr-j3fs.onrender.com/api/lots'+getParams())
+    fetch('https://hnjmr-server.onrender.com/api/lots'+getParams())
       .then(res => res.json())
       .then(data => {
 
@@ -92,7 +92,7 @@ export default function SuppliesTable() {
                   message: '¿Está seguro que desea eliminar este registro? Esta acción será permanente.', 
                   onCancel: () => setModal(modal => ({ ...modal, show: false })),
                   onAccept: () => {
-                    fetch('https://hnjmr-j3fs.onrender.com/api/lots/'+lot.id_lots, {
+                    fetch('https://hnjmr-server.onrender.com/api/lots/'+lot.id_lots, {
                       method: 'DELETE',
                     })
                       .then(res => { 

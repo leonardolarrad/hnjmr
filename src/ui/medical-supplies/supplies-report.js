@@ -30,7 +30,7 @@ export default function SuppliesReport() {
     });
 
     // Fetch report 
-    fetch('https://hnjmr-j3fs.onrender.com/api/lots?limit=9999999999999999')
+    fetch('https://hnjmr-server.onrender.com/api/lots?limit=9999999999999999')
       .then(response => response.json())
       .then(data => {
 

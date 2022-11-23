@@ -37,7 +37,7 @@ export default function AssetsEditor({mode}) {
     if (!id) 
       return;
 
-    fetch('https://hnjmr-j3fs.onrender.com/api/national-assets/'+id, { headers: {"accepts": "application/json"}})
+    fetch('https://hnjmr-server.onrender.com/api/national-assets/'+id, { headers: {"accepts": "application/json"}})
       .then(res => res.json())
       .then(asset => {
         
@@ -140,7 +140,7 @@ export default function AssetsEditor({mode}) {
       })
     };
 
-    fetch('https://hnjmr-j3fs.onrender.com/api/national-assets/' + (id ? id : ''), requestOptions)
+    fetch('https://hnjmr-server.onrender.com/api/national-assets/' + (id ? id : ''), requestOptions)
       .then(response => response.json())
       .then(data => {
         

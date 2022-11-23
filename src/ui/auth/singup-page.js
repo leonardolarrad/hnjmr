@@ -80,7 +80,7 @@ export default function SingupPage() {
       isLoading: true,
     });      
 
-    fetch('https://hnjmr-j3fs.onrender.com/api/auth/register', {
+    fetch('https://hnjmr-server.onrender.com/api/auth/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

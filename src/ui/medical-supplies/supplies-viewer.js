@@ -32,7 +32,7 @@ export default function SuppliesViewer() {
 
   useEffect(() => {
     
-    fetch('https://hnjmr-j3fs.onrender.com/api/lots/'+id, { headers: {"accepts": "application/json"}})
+    fetch('https://hnjmr-server.onrender.com/api/lots/'+id, { headers: {"accepts": "application/json"}})
       .then(res => res.json())
       .then(data => {
 

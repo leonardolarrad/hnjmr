@@ -112,7 +112,7 @@ export default function LoginPage() {
 
       // load user in sesion storage
 
-      fetch('https://hnjmr-j3fs.onrender.com/api/auth/info-user', {
+      fetch('https://hnjmr-server.onrender.com/api/auth/info-user', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

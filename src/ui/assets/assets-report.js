@@ -35,7 +35,7 @@ export default function AssetsReport() {
     });
 
     // Fetch report 
-    fetch('https://hnjmr-j3fs.onrender.com/api/assets?limit=9999999999999999')
+    fetch('https://hnjmr-server.onrender.com/api/assets?limit=9999999999999999')
       .then(response => response.json())
       .then(data => {
 
