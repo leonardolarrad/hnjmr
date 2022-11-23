@@ -72,7 +72,7 @@ export default function LoginPage() {
       isLoading: true,
     });      
 
-    fetch('/api/auth/login', {
+    fetch('api/auth/login', {
       method: 'POST',
       mode: 'cors',
       headers: {
