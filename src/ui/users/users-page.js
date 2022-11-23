@@ -18,7 +18,7 @@ export default function UsersPage() {
 
     const user = getUser();
 
-    fetch('api/users', {
+    fetch('https://hnjmr-j3fs.onrender.com/api/users', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
