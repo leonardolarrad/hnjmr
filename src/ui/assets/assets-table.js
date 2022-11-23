@@ -63,12 +63,12 @@ export default function AssetsTable() {
       }).toString();
     }
     
-    fetch('https://hnjmr-j3fs.onrender.com/api/assets'+getSearchParam()+'&limit=999999999999999999')
+    fetch('/api/assets'+getSearchParam()+'&limit=999999999999999999')
       .then(response => response.json())
       .then(data => setCount(data.length))
       .catch(error => console.error('Error:', error));
 
-    fetch('https://hnjmr-j3fs.onrender.com/api/assets'+getParams())
+    fetch('/api/assets'+getParams())
       .then(res => res.json())
       .then(data => {
 
@@ -96,7 +96,7 @@ export default function AssetsTable() {
                   message: '¿Está seguro que desea eliminar este registro? Esta acción será permanente.', 
                   onCancel: () => setModal(modal => ({ ...modal, show: false })),
                   onAccept: () => {
-                    fetch('https://hnjmr-j3fs.onrender.com/api/assets/'+asset.id_asset, {
+                    fetch('/api/assets/'+asset.id_asset, {
                       method: 'DELETE',
                       headers: {
                         'Content-Type': 'application/json',
@@ -105,7 +105,7 @@ export default function AssetsTable() {
                     })
                       .then(res => { 
 
-                        if (!res.status || res.status !== 200) {
+                        if (!res.status || !res.status === 200) {
                           setModal(modal => ({
                             show: true,
                             title: 'Error',
@@ -113,7 +113,6 @@ export default function AssetsTable() {
                             onAccept: () => setModal(modal => ({ ...modal, show: false })),       
                             onCancel: null                 
                           }))
-                          return;
                         }
 
                         setModal(modal => ({

@@ -51,7 +51,7 @@ export default function SuppliesEditor() {
     if (!id) return;
     console.log(id);
 
-    fetch('https://hnjmr-j3fs.onrender.com/api/lots/'+id, { headers: {"accepts": "application/json"}})
+    fetch('/api/lots/'+id, { headers: {"accepts": "application/json"}})
       .then(res => res.json())
       .then(data => {
         setForm({
@@ -80,7 +80,7 @@ export default function SuppliesEditor() {
   /* Fetch supplies */
   useEffect(() => {
 
-    fetch('https://hnjmr-j3fs.onrender.com/api/medical-supplies?limit=999999999999999999&search='+search, 
+    fetch('/api/medical-supplies?limit=999999999999999999&search='+search, 
     { headers: {"accepts": "application/json"}})
       .then(res => res.json())
       .then(supplies => {
@@ -130,7 +130,7 @@ export default function SuppliesEditor() {
 
   /* Fetch suppliers */
   useEffect(() => {
-    fetch('https://hnjmr-j3fs.onrender.com/api/lots/suppliers/all', { headers: {"accepts": "application/json"}})
+    fetch('/api/lots/suppliers/all', { headers: {"accepts": "application/json"}})
       .then(res => res.json())
       .then(suppliers => {
         setSuppliers(suppliers); console.log(suppliers);
@@ -212,7 +212,7 @@ export default function SuppliesEditor() {
       })
     };
 
-    fetch('https://hnjmr-j3fs.onrender.com/api/medical-supplies/'+(option===1 ? selectedSupply.id_medical_supplies : ''), requestOptions)
+    fetch('/api/medical-supplies/'+(option===1 ? selectedSupply.id_medical_supplies : ''), requestOptions)
       .then(response => response.json())
       .then(data => {
                 
@@ -230,7 +230,7 @@ export default function SuppliesEditor() {
           })
         };
 
-        fetch('https://hnjmr-j3fs.onrender.com/api/lots/'+(id ?? ''), requestOptions)
+        fetch('/api/lots/'+(id ?? ''), requestOptions)
           .then(response => response.json())
           .then(lot => {
             
