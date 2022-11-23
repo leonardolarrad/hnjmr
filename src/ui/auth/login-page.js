@@ -74,6 +74,7 @@ export default function LoginPage() {
 
     fetch('https://hnjmr-j3fs.onrender.com/api/auth/login', {
       method: 'POST',
+      mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
