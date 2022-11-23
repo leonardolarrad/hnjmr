@@ -1,7 +1,7 @@
 {
     "headers": [
       {
-        "source": "https://hnjmr-j3fs.onrender.com/api/(.*)",
+        "source": "/api/(.*)",
         "headers": [
           { "key": "Access-Control-Allow-Credentials", "value": "true" },
           { "key": "Access-Control-Allow-Origin", "value": "*" },
