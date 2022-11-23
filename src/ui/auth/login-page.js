@@ -72,7 +72,7 @@ export default function LoginPage() {
       isLoading: true,
     });      
 
-    fetch('https://hnjmr-j3fs.onrender.com/api/auth/login', {
+    fetch('/api/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -108,7 +108,7 @@ export default function LoginPage() {
 
       // load user in sesion storage
 
-      fetch('https://hnjmr-j3fs.onrender.com/api/auth/info-user', {
+      fetch('/api/auth/info-user', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
