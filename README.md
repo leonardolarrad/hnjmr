@@ -2,12 +2,7 @@
 
 Sistema de gestión para el Hospital de Niños Dr. José Manuel de los Ríos. 
 
-Este proyecto fue realizado como parte del cumplimiento de pasantias de servicio comunitario en la Universidad Católica Andrés Bello (UCAB). El repositorio contiene el código fuente y la documentación de la aplicación cliente; no obstante, el proyecto también cuenta con una API REST para la comunicación con el servicio de almacenamiento [hnjmr-server](https://github.com/ChristianSanchez25/hnjmr-server).
-
-## Prerequisitos
-
-1. [Git](https://git-scm.com/)
-2. [NodeJS](https://nodejs.org/es/)
+Este proyecto fue realizado como parte del cumplimiento de pasantias de servicio comunitario en la Universidad Católica Andrés Bello (UCAB). El repositorio contiene el código fuente y la documentación de la aplicación cliente; no obstante, el proyecto también cuenta con un backend para la comunicación con el servicio de almacenamiento [hnjmr-server](https://github.com/ChristianSanchez25/hnjmr-server).
 
 ## Instalación
 
@@ -31,6 +26,4 @@ Para ejecutar la aplicación en modo escritorio corremos
 y para ejecutar la aplicación en modo browser 
 
     $ npm run browser
-
-## Construir y distribuir (producción)
 
