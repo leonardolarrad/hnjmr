@@ -1,5 +1,11 @@
 # HNJMR 
 
+<picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/preview-dark.png">
+    <source media="(prefers-color-scheme: light)" srcset="docs/preview-light.png">
+    <img src="docs/preview-light.png" alt="Preview">
+</picture>
+
 Sistema de gestión para el Hospital de Niños Dr. José Manuel de los Ríos. 
 
 Este proyecto fue realizado como parte del cumplimiento de pasantias de servicio comunitario en la Universidad Católica Andrés Bello (UCAB). El repositorio contiene el código fuente y la documentación de la aplicación cliente; no obstante, el proyecto también cuenta con un backend para la comunicación con el servicio de almacenamiento [hnjmr-server](https://github.com/ChristianSanchez25/hnjmr-server).
